@@ -1,0 +1,15 @@
+.jumbotron {
+    display: flex;
+    justify-content: center;
+    height: 500px;
+    width: 85%;
+    align-items: center;
+    margin: auto;
+    margin-top: 12px;
+}
+
+#googlemaps {
+    position: inherit;
+    z-index: 0;
+    border-radius: 24px;
+}
