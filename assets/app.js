@@ -37,8 +37,8 @@ var database = firebase.database();
 
 function initAutocomplete() {
     var map = new google.maps.Map(document.getElementById('googlemaps'), {
-      center: {lat: -33.8688, lng: 151.2195},
-      zoom: 13,
+      center: {lat: 40, lng: -100},
+      zoom: 5,
       mapTypeId: 'roadmap'
     });
 
@@ -101,6 +101,35 @@ function initAutocomplete() {
       map.fitBounds(bounds);
     });
 }
+
+// Try HTML5 geolocation.
+if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      var pos = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+      console.log(pos);
+      infoWindow.setPosition(pos);
+      infoWindow.setContent("Your Location");
+      infoWindow.open(map);
+      map.setCenter(pos);
+    }, function() {
+      handleLocationError(true, infoWindow, map.getCenter());
+    });
+  } else {
+    // Browser doesn’t support Geolocation
+    handleLocationError(false, infoWindow, map.getCenter());
+  }
+
+
+// function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+//   infoWindow.setPosition(pos);
+//   infoWindow.setContent(browserHasGeolocation ?
+//                         ‘Error: The Geolocation service failed.’ :
+//                         ’Error: Your browser doesn\‘t support geolocation.’);
+//   infoWindow.open(map);
+// }
 
 
 
