@@ -132,5 +132,79 @@ if (navigator.geolocation) {
 // }
 
 
+  // Initialize Firebase for Uber
+  var config = {
+    apiKey: "AIzaSyC1tZ0V983FSdADD8TTjq7bjLC0AaR_HA4",
+    authDomain: "project1-ac08d.firebaseapp.com",
+    databaseURL: "https://project1-ac08d.firebaseio.com",
+    projectId: "project1-ac08d",
+    storageBucket: "project1-ac08d.appspot.com",
+    messagingSenderId: "611644065697"
+  };
+  firebase.initializeApp(config);
 
+  var database = firebase.database();
 
+  var queryURLETA = "https://api.uber.com/v1.2/estimates/time?start_latitude=" + startLatitude + "&start_longitude=" + startLongitude + "&end_latitude=" + endLatitude + "&end_longitude=" + endLongitude + "&server_token=CYeYg4Brhv5cRtRYESfcC9iRKG9TCDCfZhxASEaS";
+  var queryURLPrice = "https://api.uber.com/v1.2/estimates/price?start_latitude=" + startLatitude + "&start_longitude=" + startLongitude + "&end_latitude=" + endLatitude + "&end_longitude=" + endLongitude + "&server_token=CYeYg4Brhv5cRtRYESfcC9iRKG9TCDCfZhxASEaS";
+
+  
+
+//Function for Uber AJAX Prices
+function uberTestPrice() {
+
+    jQuery.ajax({
+                type: "GET",
+                url: queryURLPrice, 
+                crossDomain: true,
+                beforeSend: setHeader, 
+                 
+    
+            }).then(function(response){
+                console.log(response);
+    
+                //Looping through all the prices objects
+                for ( var i = 0; i < response.prices.length; i++){
+                
+                
+                console.log(response.prices[i].low_estimate);
+    
+                }
+            });
+    
+    }
+    //Function calling the Uber ETA for Times
+    function uberTestETA() {
+    
+    jQuery.ajax({
+                type: "GET",
+                url: queryURLETA, 
+                crossDomain: true,
+                beforeSend: setHeader, 
+                 
+    
+            }).then(function(response){
+                console.log(response);
+    
+                 //Looping through all the ETA objects
+                 for ( var i = 0; i < response.times.length; i++){
+                    console.log(response.times[i].estimate);
+                 }
+            });
+    
+    }
+    //Function to set the header for the authorization key
+    function setHeader(xhr) {
+    
+        database.ref().on("value", function(snapshot){
+          var token = (snapshot.val().Uber.UberKey);
+    
+          xhr.setRequestHeader("Authorization", + token);
+          xhr.setRequestHeader("Access-Control-Allow-Origin","*");
+    
+        })
+    }
+    
+    //Calling the function
+    uberTestPrice();
+    uberTestETA();
