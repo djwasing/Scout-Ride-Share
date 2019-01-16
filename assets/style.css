@@ -1,4 +1,9 @@
-.jumbotron {
+body {
+  background-color: #1f2833;
+}
+
+
+#googlemaps {
     display: flex;
     justify-content: center;
     height: 400px;
@@ -101,3 +106,32 @@
       #target {
         width: 345px;
       }
+
+
+
+
+/* results page */
+
+#results-jumbo {
+
+  justify-content: center;
+  text-align: center;
+  margin-top: 100px;
+  background-image: url("https://images.pexels.com/photos/399636/pexels-photo-399636.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
+
+}
+
+
+#results-header {
+  background-color: #1f2833;
+  color: #66FCF1;
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border: 2px solid #66FCF1;
+}
+
+.card-deck {
+  justify-content: space-evenly;
+  margin-top: 20px;
+}
