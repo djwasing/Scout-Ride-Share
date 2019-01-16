@@ -11,6 +11,8 @@ var config = {
 firebase.initializeApp(config);
 
 var database = firebase.database();
+var map, infoWindow, pos;
+
 
 // //-----------------------------------------
 
@@ -36,12 +38,12 @@ var database = firebase.database();
 //   parameter when you first load the API. For example:
 
 function initAutocomplete() {
-    var map = new google.maps.Map(document.getElementById('googlemaps'), {
+    map = new google.maps.Map(document.getElementById('googlemaps'), {
       center: {lat: 40, lng: -100},
       zoom: 5,
       mapTypeId: 'roadmap'
     });
-
+    infoWindow = new google.maps.InfoWindow;
     // Create the search box and link it to the UI element.
     var input = document.getElementById('pac-input');
     var searchBox = new google.maps.places.SearchBox(input);
@@ -70,6 +72,9 @@ function initAutocomplete() {
 
       // For each place, get the icon, name and location.
       var bounds = new google.maps.LatLngBounds();
+    //   console.log("long" + bounds[0].j);
+    //   console.log("lat" + bounds[1].j);
+      
       places.forEach(function(place) {
         if (!place.geometry) {
           console.log("Returned place contains no geometry");
@@ -82,7 +87,8 @@ function initAutocomplete() {
           anchor: new google.maps.Point(17, 34),
           scaledSize: new google.maps.Size(25, 25)
         };
-
+        console.log("newLat: " + place.geometry.location.lat());
+        console.log("newLng: " + place.geometry.location.lng());
         // Create a marker for each place.
         markers.push(new google.maps.Marker({
           map: map,
@@ -105,7 +111,7 @@ function initAutocomplete() {
 // Try HTML5 geolocation.
 if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
-      var pos = {
+      pos = {
         lat: position.coords.latitude,
         lng: position.coords.longitude
       };
