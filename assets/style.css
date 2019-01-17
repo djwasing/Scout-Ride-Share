@@ -145,3 +145,10 @@ body {
 .card-header {
   font-size: 200%;
 }
+
+.btn-info, .btn-dark {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 40px;
+  padding-right: 40px;
+}
