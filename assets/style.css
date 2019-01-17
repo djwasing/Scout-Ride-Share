@@ -1,9 +1,17 @@
 body {
   background-color: #1f2833;
-  background-image: linear-gradient(120deg, #1f2833, rgb(55, 68, 85), #45A29E);
+  background-image: linear-gradient(120deg, #161c24, #203144, #1f2833, #161c24, #161c24, #263950, #1f2833);
   
 }
 
+.navbar {
+  background-color: #151b22;
+  border-bottom: 2px solid rgb(49, 117, 114);
+}
+
+#scout-logo {
+  max-width: 300px;
+}
 
 #googlemaps {
     display: flex;
@@ -31,12 +39,6 @@ body {
        * element that contains the map. */
        #map {
         height: 100%;
-      }
-      /* Optional: Makes the sample page fill the window. */
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
       }
       #description {
         font-family: Roboto;
@@ -118,7 +120,7 @@ body {
 
   justify-content: center;
   text-align: center;
-  margin-top: 100px;
+  margin-top: 50px;
   background-image: url("https://images.pexels.com/photos/399636/pexels-photo-399636.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
 
 }
