@@ -5,8 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Project 1</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- local style css -->
-    <link rel="stylesheet" type="text/css" media="screen" href="assets/style.css" />
     <!-- Favicon -->
     <!-- <link rel="icon" href=" " /> -->
     <!-- Firebase link -->
@@ -19,16 +17,31 @@
     <!-- Bootstrap style and JS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" />
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+    <!-- Google Font link -->
+    <link href='https://fonts.googleapis.com/css?family=Corben' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Major Mono Display' rel='stylesheet'>
+    <!-- local style css -->
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/style.css" />
     <!-- local JS -->
     <script src="assets/app.js"></script>
 </head>
 
 <body>
+    <div class="header row">
+        <img class="head1 img-fluid" src="assets/images/scoutLogoWhite.png"/> 
+     </div>
+
     <div class="jumbotron" id="googlemaps"></div>
     <div class="row" id="searchBar">
-        <input id="pac-input" class="controls" type="text" placeholder="Destination">
+        <input id="pac-input" class="controls" type="text" placeholder="Enter your destination here">
     </div>
     
+    <div class="container" id="buttonRow">
+        <button type="button" class="btn-outline-warning btn-lg btn1" id="uberBtn">Get Uber Info</button>
+        <button type="button" class="btn-outline-warning btn-lg btn1" id="lyftBtn">Get Lyft Info</button>
+    </div>
+
+
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPPq1AhORafo9foQ5zn3m7pf1uVNH4xTM&libraries=places&callback=initAutocomplete"
      async defer></script>
 </body>
