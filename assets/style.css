@@ -1,5 +1,7 @@
 body {
   background-color: #1f2833;
+  background-image: linear-gradient(120deg, #1f2833, rgb(55, 68, 85), #45A29E);
+  
 }
 
 
@@ -134,4 +136,12 @@ body {
 .card-deck {
   justify-content: space-evenly;
   margin-top: 20px;
+}
+
+.card {
+  border: 1px solid #66FCF1;
+}
+
+.card-header {
+  font-size: 200%;
 }
