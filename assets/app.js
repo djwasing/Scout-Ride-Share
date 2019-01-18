@@ -40,7 +40,7 @@ function initAutocomplete() {
   var directionsDisplay = new google.maps.DirectionsRenderer;
   var directionsService = new google.maps.DirectionsService;
   map = new google.maps.Map(document.getElementById('googlemaps'), {
-    center: {lat: 40, lng: -100},
+    center: { lat: 40, lng: -100 },
     zoom: 5,
     mapTypeId: 'roadmap'
   });
@@ -53,14 +53,14 @@ function initAutocomplete() {
   map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
   // Bias the SearchBox results towards current map's viewport.
-  map.addListener('bounds_changed', function() {
+  map.addListener('bounds_changed', function () {
     searchBox.setBounds(map.getBounds());
   });
 
   var markers = [];
   // Listen for the event fired when the user selects a prediction and retrieve
   // more details for that place.
-  searchBox.addListener('places_changed', function() {
+  searchBox.addListener('places_changed', function () {
     var places = searchBox.getPlaces();
 
     if (places.length == 0) {
@@ -68,7 +68,7 @@ function initAutocomplete() {
     }
 
     // Clear out the old markers.
-    markers.forEach(function(marker) {
+    markers.forEach(function (marker) {
       marker.setMap(null);
     });
     markers = [];
@@ -76,8 +76,8 @@ function initAutocomplete() {
     // For each place, get the icon, name and location.
     var bounds = new google.maps.LatLngBounds();
 
-    
-    places.forEach(function(place) {
+
+    places.forEach(function (place) {
       if (!place.geometry) {
         console.log("Returned place contains no geometry");
         return;
@@ -136,27 +136,27 @@ function initAutocomplete() {
 
 // Try HTML5 geolocation.
 if (navigator.geolocation) {
-  navigator.geolocation.getCurrentPosition(function(position) {
+  navigator.geolocation.getCurrentPosition(function (position) {
     pos = {
       lat: position.coords.latitude,
       lng: position.coords.longitude
     };
-    
+
     infoWindow.setPosition(pos);
     infoWindow.setContent("Your Location");
     infoWindow.open(map);
     map.setCenter(pos);
-    startLatitude = (pos.lat);        
+    startLatitude = (pos.lat);
     startLongitude = (pos.lng);
-  }, function() {
+  }, function () {
     handleLocationError(true, infoWindow, map.getCenter());
   });
-  
-} 
+
+}
 
 else {
-// Browser doesn’t support Geolocation
-handleLocationError(false, infoWindow, map.getCenter());
+  // Browser doesn’t support Geolocation
+  handleLocationError(false, infoWindow, map.getCenter());
 }
 
 
@@ -174,100 +174,99 @@ handleLocationError(false, infoWindow, map.getCenter());
 
 
 //Calling the function when uber button is clicked
-$(document).ready(function() {
-  
-  $("#uberBtn").click(function(e) {
+$(document).ready(function () {
+
+  $("#uberBtn").click(function (e) {
     e.preventDefault();
-    
+
     console.log("startLat: " + startLatitude);
     console.log("startLng: " + startLongitude);
     console.log("endLat: " + endLatitude);
     console.log("endLng: " + endLongitude);
- 
+
     var queryURLETA = "https://api.uber.com/v1.2/estimates/time?start_latitude=" + startLatitude + "&start_longitude=" + startLongitude + "&end_latitude=" + endLatitude + "&end_longitude=" + endLongitude + "&server_token=CYeYg4Brhv5cRtRYESfcC9iRKG9TCDCfZhxASEaS";
     var queryURLPrice = "https://api.uber.com/v1.2/estimates/price?start_latitude=" + startLatitude + "&start_longitude=" + startLongitude + "&end_latitude=" + endLatitude + "&end_longitude=" + endLongitude + "&server_token=CYeYg4Brhv5cRtRYESfcC9iRKG9TCDCfZhxASEaS";
     // console.log("THis is the URL for ETA " + queryURLETA);
 
 
-    jQuery.ajaxPrefilter(function(options) {
+    jQuery.ajaxPrefilter(function (options) {
       if (options.crossDomain && jQuery.support.cors) {
-          options.url = 'https://cors-anywhere.herokuapp.com/' + options.url;
+        options.url = 'https://cors-anywhere.herokuapp.com/' + options.url;
       }
     });
 
-//Function for Uber AJAX Prices
+    //Function for Uber AJAX Prices
 
-  function uberTestPrice() {
-    
-  
-
-  jQuery.ajax({
-              type: "GET",
-              url: queryURLPrice, 
-              crossDomain: true,
-              //beforeSend: setHeader, 
-               
-  
-          }).then(function(response){
-              console.log("Price");
-              
-              //Looping through all the prices objects
-              for ( var i = 0; i < response.prices.length; i++){
-              
-              
-              console.log(response.prices[i].low_estimate);
-  
-              }
-          });
-  
-  }
-  //Function calling the Uber ETA for Times
-  function uberTestETA() {
-    
+    function uberTestPrice() {
 
 
-  jQuery.ajax({
-              type: "GET",
-              url: queryURLETA, 
-              crossDomain: true,
-              //beforeSend: setHeader, 
-              
-  
-          }).then(function(response){
-              console.log("ETA");
-                
-               //Looping through all the ETA objects
-               for ( var i = 0; i < response.times.length; i++){
-                  console.log(response.times[i].estimate);
-               }
-          });
-  
-  }
-  //Function to set the header for the authorization key
-  function setHeader(xhr) {
-    
-<<<<<<< HEAD
+
+      jQuery.ajax({
+        type: "GET",
+        url: queryURLPrice,
+        crossDomain: true,
+        //beforeSend: setHeader, 
+
+
+      }).then(function (response) {
+        console.log("Price");
+
+        //Looping through all the prices objects
+        for (var i = 0; i < response.prices.length; i++) {
+
+
+          console.log(response.prices[i].low_estimate);
+
+        }
+      });
+
+    }
+    //Function calling the Uber ETA for Times
+    function uberTestETA() {
+
+
+
+      jQuery.ajax({
+        type: "GET",
+        url: queryURLETA,
+        crossDomain: true,
+        //beforeSend: setHeader, 
+
+
+      }).then(function (response) {
+        console.log("ETA");
+
+        //Looping through all the ETA objects
+        for (var i = 0; i < response.times.length; i++) {
+          console.log(response.times[i].estimate);
+        }
+      });
+
+    }
+
+    //Function to set the header for the authorization key
+    // function setHeader(xhr) {
+
     //Calling the function
     uberTestPrice();
     uberTestETA();
 
+  });
+});
+
 
 // LYFT API and JS -------------------------------------------------------------------------------------
-var lat;
-var long;
-var destLat;
-var destLong;
-var bearerTK;
 
-$(document).on('click', '#submit', function () {
+//store username and passcode
+//
+
+
+
+var bearerTK;
+var authO;
+
+$(document).on('click', '#lyftBtn', function () {
   event.preventDefault();
-//current user location
-  lat = $('#lat').val();
-  long = $('#long').val();
-//destination location
-  destLat = $('#lat').val();
-  destLong = $('#long').val();
-//run API calls with current location from google and destination from user input
   costEstimate();
   rideETA();
 
@@ -287,7 +286,7 @@ var settings = {
 }
 
 $.ajax(settings).done(function (response) {
-
+  console.log(response);
 });
 
 // //ETA estimates for your ride
@@ -296,12 +295,12 @@ function rideETA() {
     "async": true,
     "crossDomain": true,
     //uses google current location that was stored into lat and long variables
-    "url": "https://api.lyft.com/v1/eta?lat=" + lat + "&lng=" + long,
+    "url": "https://api.lyft.com/v1/eta?lat=" + startLatitude + "&lng=" + startLongitude,
     "method": "GET",
     "headers": {
-      "authorization": "Bearer 917Eszsz3cRKDqBknq2l/vmv3HLf365bTXhwx+J3vgr+jwHBNx55XMmYh1dZ3z8jEVtYi3B/kDPkPmgy5YRZJ6snm2pcQAg629kNKNx6ZTeoi5ZBR293NVM="
+      "authorization": "Bearer OKDZrlmIJ/Lt2N6Fe67Rc6YA/7N2L+d1H5jY0hWFGHEew7icwqjeJGss9iTVlyrfJEIeNBF3QXuWNO7iNo16yRNwgBDZOINWgt/P/Ac+zY3AYCb4aAL/zM8="
     }
-  }
+  };
 
   $.ajax(settings).then(function (response) {
     console.log(response);
@@ -309,7 +308,7 @@ function rideETA() {
     console.log("ETA: " + response.eta_estimates[0].eta_seconds);
   });
 
-}
+};
 
 
 //cost estimates for your ride
@@ -317,11 +316,11 @@ function costEstimate() {
   var settings = {
     "async": true,
     "crossDomain": true,
-       //uses google current location that was stored into lat and long variables..... uses destination info from user input
-    "url": "https://api.lyft.com/v1/cost?start_lat=" + lat + "&start_lng=" + long + "&end_lat=" + destLat + "&end_lng=" + destLong,
+    //uses google current location that was stored into lat and long variables..... uses destination info from user input
+    "url": "https://api.lyft.com/v1/cost?start_lat=" + startLatitude + "&start_lng=" + startLongitude + "&end_lat=" + endLatitude + "&end_lng=" + endLongitude,
     "method": "GET",
     "headers": {
-      "authorization": "Bearer 917Eszsz3cRKDqBknq2l/vmv3HLf365bTXhwx+J3vgr+jwHBNx55XMmYh1dZ3z8jEVtYi3B/kDPkPmgy5YRZJ6snm2pcQAg629kNKNx6ZTeoi5ZBR293NVM="
+      "authorization": "Bearer OKDZrlmIJ/Lt2N6Fe67Rc6YA/7N2L+d1H5jY0hWFGHEew7icwqjeJGss9iTVlyrfJEIeNBF3QXuWNO7iNo16yRNwgBDZOINWgt/P/Ac+zY3AYCb4aAL/zM8="
     }
   }
 
@@ -332,20 +331,22 @@ function costEstimate() {
 
   });
 };
-=======
-    database.ref().on("value", function(snapshot){
-      var token = (snapshot.val().Uber.UberKey);
-      xhr.setRequestHeader("Authorization", + token);
-      xhr.setRequestHeader("Access-Control-Allow-Origin","*");
-
-    })
-}
-
-uberTestPrice();
-uberTestETA();
-});
-}); 
 
 
->>>>>>> master
 
+//THIS IS A CODE TO REQUEST A NEW TOKEN
+//   var settings = {
+//     "async": true,
+//     "crossDomain": true,
+//     "url": "https://api.lyft.com/oauth/token",
+//     "method": "POST",
+//     "headers": {
+//       "authorization": "Basic YzEzRFA2MVNUN2lnOktDQVc4WE51X3VBUWJCcjVJczRaZzhLOGNXZGNhRVpV",
+//       "content-type": "application/json"
+//     },
+//     "data": "{\"grant_type\": \"refresh_token\", \"refresh_token\": <refresh_token>}"
+//   }
+
+//   $.ajax(settings).then(function (response) {
+//     console.log(response);
+//   });
