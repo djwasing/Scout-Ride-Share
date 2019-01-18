@@ -130,11 +130,9 @@ function initAutocomplete() {
         }
       });
     };
-
   });
-}
 
-// Try HTML5 geolocation.
+  // Try HTML5 geolocation.
 if (navigator.geolocation) {
   navigator.geolocation.getCurrentPosition(function (position) {
     pos = {
@@ -158,6 +156,9 @@ else {
   // Browser doesn’t support Geolocation
   handleLocationError(false, infoWindow, map.getCenter());
 }
+}
+
+
 
 
 
@@ -175,7 +176,7 @@ else {
 
 //Calling the function when uber button is clicked
 $(document).ready(function () {
-
+  initAutocomplete();
   $("#uberBtn").click(function (e) {
     e.preventDefault();
 
