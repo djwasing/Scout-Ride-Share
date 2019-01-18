@@ -37,11 +37,15 @@ var map, infoWindow, pos, startLatitude, startLongitude, endLatitude, endLongitu
 //   parameter when you first load the API. For example:
 
 function initAutocomplete() {
+  var directionsDisplay = new google.maps.DirectionsRenderer;
+  var directionsService = new google.maps.DirectionsService;
   map = new google.maps.Map(document.getElementById('googlemaps'), {
     center: {lat: 40, lng: -100},
     zoom: 5,
     mapTypeId: 'roadmap'
   });
+  directionsDisplay.setMap(map);
+
   infoWindow = new google.maps.InfoWindow;
   // Create the search box and link it to the UI element.
   var input = document.getElementById('pac-input');
@@ -105,6 +109,28 @@ function initAutocomplete() {
       }
     });
     map.fitBounds(bounds);
+
+    calculateAndDisplayRoute(directionsService, directionsDisplay);
+
+    function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+      var selectedMode = "DRIVING";
+      directionsService.route({
+        origin: {lat: startLatitude, lng: startLongitude},  // Current location
+        destination: {lat: endLatitude, lng: endLongitude},  // Destination
+        // Note that Javascript allows us to access the constant
+        // using square brackets and a string value as its
+        // "property."
+        travelMode: google.maps.TravelMode[selectedMode]
+      }, function(response, status) {
+        if (status == 'OK') {
+          directionsDisplay.setDirections(response);
+          infoWindow.close();
+        } else {
+          window.alert('Directions request failed due to ' + status);
+        }
+      });
+    };
+
   });
 }
 
