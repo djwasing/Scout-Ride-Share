@@ -23,15 +23,16 @@ body {
 }
 
 .head1 {
-    margin-left: -90px;
+   margin-left: 3.5%;
+   margin-bottom: 12px;
 }
 
-.head2 {
+/* .head2 {
     margin-left: 8px;
     color: white;
     font-family: 'Corben';
     font-size: 1.5vw;
-}
+} */
 
 #buttonRow {
     display: flex;

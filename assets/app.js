@@ -11,7 +11,7 @@ var config = {
 firebase.initializeApp(config);
 
 var database = firebase.database();
-var map, infoWindow, pos, startLatitude, startLongitude, endLatitude, endLongitude;
+var map, infoWindow, pos, startLatitude, startLongitude, endLatitude, endLongitude, queryURLETA, queryURLPrice;
 
 
 // //-----------------------------------------
@@ -144,32 +144,31 @@ else {
 //   infoWindow.open(map);
 // }
 
-//UBER API info
+//--------UBER API info----------------
 
+// make funciton for getting a token
+// THEN make function for each estimate request
   
   
-  var queryURLETA = "https://api.uber.com/v1.2/estimates/time?start_latitude=" + startLatitude + "&start_longitude=" + startLongitude + "&end_latitude=" + endLatitude + "&end_longitude=" + endLongitude + "&server_token=CYeYg4Brhv5cRtRYESfcC9iRKG9TCDCfZhxASEaS";
-  var queryURLPrice = "https://api.uber.com/v1.2/estimates/price?start_latitude=" + startLatitude + "&start_longitude=" + startLongitude + "&end_latitude=" + endLatitude + "&end_longitude=" + endLongitude + "&server_token=CYeYg4Brhv5cRtRYESfcC9iRKG9TCDCfZhxASEaS";
 
   
 //Calling the function when uber button is clicked
   $(document).ready(function() {
+
+  
     
     $("#uberBtn").click(function(e) {
       e.preventDefault();
-      
+      queryURLETA = "https://api.uber.com/v1.2/estimates/time?start_latitude=" + startLatitude + "&start_longitude=" + startLongitude + "&end_latitude=" + endLatitude + "&end_longitude=" + endLongitude + "&server_token=CYeYg4Brhv5cRtRYESfcC9iRKG9TCDCfZhxASEaS";
+      queryURLPrice = "https://api.uber.com/v1.2/estimates/price?start_latitude=" + startLatitude + "&start_longitude=" + startLongitude + "&end_latitude=" + endLatitude + "&end_longitude=" + endLongitude + "&server_token=CYeYg4Brhv5cRtRYESfcC9iRKG9TCDCfZhxASEaS";
       console.log("startLat: " + startLatitude);
       console.log("startLng: " + startLongitude);
       console.log("endLat: " + endLatitude);
       console.log("endLng: " + endLongitude);
-      uberTestPrice();
-      uberTestETA();
-    });
-  }); 
+      //console.log(queryURLPrice);
   
-
-//Function for Uber AJAX Prices
-
+  //Function for Uber AJAX Prices-------
+  
     function uberTestPrice() {
 
     jQuery.ajax({
@@ -215,15 +214,18 @@ else {
     //Function to set the header for the authorization key
     function setHeader(xhr) {
     
-        database.ref().on("value", function(snapshot){
-          var token = (snapshot.val().Uber.UberKey);
+        //database.ref().on("value", function(snapshot){
+          var token = "JA.VUNmGAAAAAAAEgASAAAABwAIAAwAAAAAAAAAEgAAAAAAAAG8AAAAFAAAAAAADgAQAAQAAAAIAAwAAAAOAAAAkAAAABwAAAAEAAAAEAAAAPwqOP3m-X0rOweEw5hGnhpsAAAAAu6sKlqtlNn30XjyGBffSHfoUnLbYVhKFQcRXS3EsOgY7X1rC_bcnc8ys9_yi_DvgGIqeWZGLX7j5Nb7A0fA85B19ya4zALR9Asjb5bAzB7PTtNMTZ6Ok7vJ1zeWlkMcXzcjmJ9KNcwUhNXpDAAAAG2oTu7jIRek50SxxCQAAABiMGQ4NTgwMy0zOGEwLTQyYjMtODA2ZS03YTRjZjhlMTk2ZWU";
     
           xhr.setRequestHeader("Authorization", + token);
           xhr.setRequestHeader("Access-Control-Allow-Origin","*");
     
-        })
+        //})
     }
-
+    uberTestPrice();
+    uberTestETA();
+    });
+  }); 
 
     
     
