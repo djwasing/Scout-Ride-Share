@@ -7,7 +7,7 @@ body {
 .navbar {
   background-color: #151b22;
   border-bottom: 2px solid rgb(49, 117, 114);
-}
+} 
 
 #scout-logo {
   max-width: 300px;
@@ -17,10 +17,8 @@ body {
     display: flex;
     justify-content: center;
     height: 350px;
-    width: 60%;
-    align-items: center;
-    margin-left: 100px;
-    margin-top: -8px;
+    width: 50%;
+    margin-left: 20%;
     border: solid #00303F 6px;
 }
 
@@ -62,11 +60,11 @@ body {
     margin-right: 20px;    
 }
 
-#searchBar {
+/* #searchBar {
     justify-content: center;
     align-items: center;
     width: 100%;
-}
+} */
 
 #googlemaps {
     position: inherit;
