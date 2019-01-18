@@ -163,16 +163,23 @@ $(document).ready(function() {
     // console.log("THis is the URL for ETA " + queryURLETA);
 
 
+    jQuery.ajaxPrefilter(function(options) {
+      if (options.crossDomain && jQuery.support.cors) {
+          options.url = 'https://cors-anywhere.herokuapp.com/' + options.url;
+      }
+    });
 
 //Function for Uber AJAX Prices
 
   function uberTestPrice() {
+    
+  
 
   jQuery.ajax({
               type: "GET",
               url: queryURLPrice, 
               crossDomain: true,
-              beforeSend: setHeader, 
+              //beforeSend: setHeader, 
                
   
           }).then(function(response){
@@ -190,12 +197,14 @@ $(document).ready(function() {
   }
   //Function calling the Uber ETA for Times
   function uberTestETA() {
-  
+    
+
+
   jQuery.ajax({
               type: "GET",
               url: queryURLETA, 
               crossDomain: true,
-              beforeSend: setHeader, 
+              //beforeSend: setHeader, 
               
   
           }).then(function(response){
