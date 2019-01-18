@@ -1,11 +1,50 @@
 .jumbotron {
     display: flex;
     justify-content: center;
-    height: 400px;
-    width: 85%;
+    height: 350px;
+    width: 60%;
     align-items: center;
-    margin: auto;
-    margin-top: 12px;
+    margin-left: 100px;
+    margin-top: -8px;
+    border: solid #00303F 6px;
+}
+
+body {
+    background-image: url(../assets/images/scoutSkyline.jpg);
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.header {
+    margin-top: 8px;
+    height: 140px;
+}
+
+.head1 {
+   margin-left: 3.5%;
+   margin-bottom: 22px;
+   max-width: 180px;
+}
+
+/* .head2 {
+    margin-left: 8px;
+    color: white;
+    font-family: 'Corben';
+    font-size: 1.5vw;
+} */
+
+#buttonRow {
+    display: flex;
+    justify-content: center;
+    width: 60%;
+    margin-left: 18px;
+    margin-bottom: 36px;
+}
+
+.btn1 {
+    margin-right: 20px;    
 }
 
 #searchBar {
