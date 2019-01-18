@@ -208,3 +208,86 @@ function uberTestPrice() {
     //Calling the function
     uberTestPrice();
     uberTestETA();
+
+
+// LYFT API and JS -------------------------------------------------------------------------------------
+var lat;
+var long;
+var destLat;
+var destLong;
+var bearerTK;
+
+$(document).on('click', '#submit', function () {
+  event.preventDefault();
+//current user location
+  lat = $('#lat').val();
+  long = $('#long').val();
+//destination location
+  destLat = $('#lat').val();
+  destLong = $('#long').val();
+//run API calls with current location from google and destination from user input
+  costEstimate();
+  rideETA();
+
+});
+//Lyft ajax method
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "https://api.lyft.com/oauth/token",
+  "method": "POST",
+  "headers": {
+    "authorization": "Basic YzEzRFA2MVNUN2lnOk1MRVR3VVg1THFaNm1XMXhDRjl0elBvb0JSSThtT1lr",
+    "content-type": "application/json"
+  },
+  "processData": false,
+  "data": "{\"grant_type\": \"client_credentials\", \"scope\": \"public\"}"
+}
+
+$.ajax(settings).done(function (response) {
+
+});
+
+// //ETA estimates for your ride
+function rideETA() {
+  var settings = {
+    "async": true,
+    "crossDomain": true,
+    //uses google current location that was stored into lat and long variables
+    "url": "https://api.lyft.com/v1/eta?lat=" + lat + "&lng=" + long,
+    "method": "GET",
+    "headers": {
+      "authorization": "Bearer 917Eszsz3cRKDqBknq2l/vmv3HLf365bTXhwx+J3vgr+jwHBNx55XMmYh1dZ3z8jEVtYi3B/kDPkPmgy5YRZJ6snm2pcQAg629kNKNx6ZTeoi5ZBR293NVM="
+    }
+  }
+
+  $.ajax(settings).then(function (response) {
+    console.log(response);
+    //code for pickup ETA
+    console.log("ETA: " + response.eta_estimates[0].eta_seconds);
+  });
+
+}
+
+
+//cost estimates for your ride
+function costEstimate() {
+  var settings = {
+    "async": true,
+    "crossDomain": true,
+       //uses google current location that was stored into lat and long variables..... uses destination info from user input
+    "url": "https://api.lyft.com/v1/cost?start_lat=" + lat + "&start_lng=" + long + "&end_lat=" + destLat + "&end_lng=" + destLong,
+    "method": "GET",
+    "headers": {
+      "authorization": "Bearer 917Eszsz3cRKDqBknq2l/vmv3HLf365bTXhwx+J3vgr+jwHBNx55XMmYh1dZ3z8jEVtYi3B/kDPkPmgy5YRZJ6snm2pcQAg629kNKNx6ZTeoi5ZBR293NVM="
+    }
+  }
+
+  $.ajax(settings).then(function (response) {
+    console.log(response)
+    //code for cost estimate range
+    console.log("Cost range: " + response.cost_estimates[0].estimated_cost_cents_min + "-" + response.cost_estimates[0].estimated_cost_cents_max);
+
+  });
+};
+
