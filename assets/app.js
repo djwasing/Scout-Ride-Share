@@ -210,15 +210,15 @@ $(document).ready(function () {
 
 
       }).then(function (response) {
-        console.log("Price");
+        //console.log("Price");
 
         //Looping through all the prices objects
-        for (var i = 0; i < response.prices.length; i++) {
+        //for (var i = 0; i < response.prices.length; i++) {
 
 
-          console.log(response.prices[i].low_estimate);
+          console.log("UBER cost: " + response.prices[0].low_estimate);
 
-        }
+        //}
       });
 
     }
@@ -235,12 +235,12 @@ $(document).ready(function () {
 
 
       }).then(function (response) {
-        console.log("ETA");
+        // console.log("ETA");
 
         //Looping through all the ETA objects
-        for (var i = 0; i < response.times.length; i++) {
-          console.log(response.times[i].estimate);
-        }
+        //for (var i = 0; i < response.times.length; i++) {
+          console.log("UBER ETAs: " + response.times[0].estimate);
+        //}
       });
 
     }
@@ -301,9 +301,9 @@ var settings = {
   "processData": false,
   "data": "{\"grant_type\": \"client_credentials\", \"scope\": \"public\"}"
 }
-$.ajax(settings).then(function (response) {
-  console.log(response);
-});
+// $.ajax(settings).then(function (response) {
+//   console.log(response);
+// });
 
 $.ajax(settings).done(function (response) {
   console.log(response);
@@ -325,7 +325,7 @@ function rideETA() {
   $.ajax(settings).then(function (response) {
     console.log(response);
     //code for pickup ETA
-    console.log("ETA: " + response.eta_estimates[0].eta_seconds);
+    console.log("LYFT ETA: " + response.eta_estimates[0].eta_seconds);
   });
 
 };
@@ -347,12 +347,12 @@ function costEstimate() {
   $.ajax(settings).then(function (response) {
     console.log(response)
     //code for cost estimate range
-    console.log("Cost range: " + response.cost_estimates[0].estimated_cost_cents_min + "-" + response.cost_estimates[0].estimated_cost_cents_max);
+    console.log("LYFT cost: " + response.cost_estimates[0].estimated_cost_cents_min);
 
   });
 };
 
-
+// format times and cents to dollars to display results
 
 
 
