@@ -265,13 +265,18 @@ $(document).ready(function () {
 
 var bearerTK;
 var authO;
+var costEstimate;
+var pickupEta;
 
 $(document).on('click', '#lyftBtn', function () {
   event.preventDefault();
   costEstimate();
   rideETA();
-
+  // makeLyftBtn();
 });
+
+
+
 //Lyft ajax method
 var settings = {
   "async": true,
@@ -279,7 +284,7 @@ var settings = {
   "url": "https://api.lyft.com/oauth/token",
   "method": "POST",
   "headers": {
-    "authorization": "Basic YzEzRFA2MVNUN2lnOk1MRVR3VVg1THFaNm1XMXhDRjl0elBvb0JSSThtT1lr",
+    "authorization": "Basic YzEzRFA2MVNUN2lnOjRJaXd5N2tzWnN1LV9talpmXzU4UU5hYzlYbEd2NFVH",
     "content-type": "application/json"
   },
   "processData": false,
@@ -290,6 +295,7 @@ $.ajax(settings).done(function (response) {
   console.log(response);
 });
 
+
 // //ETA estimates for your ride
 function rideETA() {
   var settings = {
@@ -299,14 +305,16 @@ function rideETA() {
     "url": "https://api.lyft.com/v1/eta?lat=" + startLatitude + "&lng=" + startLongitude,
     "method": "GET",
     "headers": {
-      "authorization": "Bearer OKDZrlmIJ/Lt2N6Fe67Rc6YA/7N2L+d1H5jY0hWFGHEew7icwqjeJGss9iTVlyrfJEIeNBF3QXuWNO7iNo16yRNwgBDZOINWgt/P/Ac+zY3AYCb4aAL/zM8="
+      "authorization": "Bearer KZGj1zIbl6rT9cB7NAuYk2T1STybou3n7SBOw6Tdu9tMgjVq0KkZQ2Kqr7zMUx/cHjjFP/TjctaIET0PteQNs0R+qkVrDGtffxStm8/Q2cyr8vr5MzrdT5s="
     }
   };
 
   $.ajax(settings).then(function (response) {
     console.log(response);
+    pickupEta = response.eta_estimates[0].eta_seconds;
     //code for pickup ETA
-    console.log("ETA: " + response.eta_estimates[0].eta_seconds);
+    console.log("ETA: " + pickupEta);
+
   });
 
 };
@@ -321,18 +329,18 @@ function costEstimate() {
     "url": "https://api.lyft.com/v1/cost?start_lat=" + startLatitude + "&start_lng=" + startLongitude + "&end_lat=" + endLatitude + "&end_lng=" + endLongitude,
     "method": "GET",
     "headers": {
-      "authorization": "Bearer OKDZrlmIJ/Lt2N6Fe67Rc6YA/7N2L+d1H5jY0hWFGHEew7icwqjeJGss9iTVlyrfJEIeNBF3QXuWNO7iNo16yRNwgBDZOINWgt/P/Ac+zY3AYCb4aAL/zM8="
+      "authorization": "Bearer KZGj1zIbl6rT9cB7NAuYk2T1STybou3n7SBOw6Tdu9tMgjVq0KkZQ2Kqr7zMUx/cHjjFP/TjctaIET0PteQNs0R+qkVrDGtffxStm8/Q2cyr8vr5MzrdT5s="
     }
   }
 
   $.ajax(settings).then(function (response) {
     console.log(response)
+    costEstimate = response.cost_estimates[0].estimated_cost_cents_min + "-" + response.cost_estimates[0].estimated_cost_cents_max;
     //code for cost estimate range
-    console.log("Cost range: " + response.cost_estimates[0].estimated_cost_cents_min + "-" + response.cost_estimates[0].estimated_cost_cents_max);
+    console.log("Cost range: " + costEstimate);
 
   });
 };
-
 
 
 //THIS IS A CODE TO REQUEST A NEW TOKEN
