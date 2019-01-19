@@ -10,7 +10,7 @@ var config = {
 firebase.initializeApp(config);
 
 var database = firebase.database();
-var map, infoWindow, pos, startLatitude, startLongitude, endLatitude, endLongitude;
+var map, infoWindow, pos, startLatitude, startLongitude, endLatitude, endLongitude, pickupEta, costEstimate;
 
 
 // //-----------------------------------------
@@ -180,10 +180,10 @@ $(document).ready(function () {
   $("#goBtn").click(function (e) {
     e.preventDefault();
     //$(".btn1").animate({down: "-=250px"}, "slow");        //not working
-    console.log("startLat: " + startLatitude);
-    console.log("startLng: " + startLongitude);
-    console.log("endLat: " + endLatitude);
-    console.log("endLng: " + endLongitude);
+    // console.log("startLat: " + startLatitude);
+    // console.log("startLng: " + startLongitude);
+    // console.log("endLat: " + endLatitude);
+    // console.log("endLng: " + endLongitude);
 
     var queryURLETA = "https://api.uber.com/v1.2/estimates/time?start_latitude=" + startLatitude + "&start_longitude=" + startLongitude + "&end_latitude=" + endLatitude + "&end_longitude=" + endLongitude + "&server_token=CYeYg4Brhv5cRtRYESfcC9iRKG9TCDCfZhxASEaS";
     var queryURLPrice = "https://api.uber.com/v1.2/estimates/price?start_latitude=" + startLatitude + "&start_longitude=" + startLongitude + "&end_latitude=" + endLatitude + "&end_longitude=" + endLongitude + "&server_token=CYeYg4Brhv5cRtRYESfcC9iRKG9TCDCfZhxASEaS";
@@ -216,7 +216,7 @@ $(document).ready(function () {
         //for (var i = 0; i < response.prices.length; i++) {
 
 
-          console.log("UBER cost: " + response.prices[0].low_estimate);
+          console.log("Uber cost: " + response.prices[0].low_estimate);
 
         //}
       });
@@ -235,11 +235,16 @@ $(document).ready(function () {
 
 
       }).then(function (response) {
+        num1 = response.times[0].estimate;
+        num2 = 60;
+        UberEta = parseInt(num1) / num2;
+        console.log("Uber ETA: " + UberEta + " mins");
+        
         // console.log("ETA");
 
         //Looping through all the ETA objects
         //for (var i = 0; i < response.times.length; i++) {
-          console.log("UBER ETAs: " + response.times[0].estimate);
+          //console.log("UBER ETA: " + response.times[0].estimate);
         //}
       });
 
@@ -251,9 +256,11 @@ $(document).ready(function () {
     //Calling the function
     uberTestPrice();
     uberTestETA();
+    costEstimate();
+    rideETA();
 
-  });
-});
+  
+
 
 
 // LYFT API and JS -------------------------------------------------------------------------------------
@@ -265,15 +272,14 @@ $(document).ready(function () {
 
 // var bearerTK;
 // var authO;
-var costEstimate;
-var pickupEta;
 
-$(document).on('click', '#goBtn', function () {
-  event.preventDefault();
-  costEstimate();
-  rideETA();
-  // makeLyftBtn();
-});
+
+
+// $(document).on('click', '#goBtn', function () {
+//   event.preventDefault();
+  
+//   // makeLyftBtn();
+// });
 
 
 
@@ -313,7 +319,7 @@ var settings = {
 // });
 
 $.ajax(settings).done(function (response) {
-  console.log(response);
+  //console.log(response);
 });
 
 
@@ -333,12 +339,14 @@ function rideETA() {
   };
 
   $.ajax(settings).then(function (response) {
-    console.log(response);
-    pickupEta = response.eta_estimates[0].eta_seconds;
+    num1 = response.eta_estimates[0].eta_seconds;
+    num2 = 60;
+    LyftEta = parseInt(num1) / num2;
+    console.log("Lyft ETA: " + LyftEta + " mins");
+    //pickupEta = response.eta_estimates[0].eta_seconds;
     //code for pickup ETA
-
-    console.log("LYFT ETA: " + response.eta_estimates[0].eta_seconds);
-
+    //console.log(response);
+    //console.log("LYFT ETA: " + response.eta_estimates[0].eta_seconds);
   });
 
 };
@@ -360,15 +368,18 @@ function costEstimate() {
   }
 
   $.ajax(settings).then(function (response) {
-    console.log(response)
+    //console.log(response)
     costEstimate = response.cost_estimates[0].estimated_cost_cents_min + "-" + response.cost_estimates[0].estimated_cost_cents_max;
     //code for cost estimate range
 
-    console.log("LYFT cost: " + response.cost_estimates[0].estimated_cost_cents_min);
+    console.log("Lyft cost: " + response.cost_estimates[0].estimated_cost_cents_min);
 
 
   });
 };
+});
+
+});
 
 // format times and cents to dollars to display results
 
