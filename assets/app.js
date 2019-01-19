@@ -275,35 +275,35 @@ $(document).on('click', '#goBtn', function () {
 
 
 //THIS IS A CODE TO REQUEST A NEW TOKEN
-var settings = {
-  "async": true,
-  "crossDomain": true,
-  "url": "https://api.lyft.com/oauth/token",
-  "method": "POST",
-  "headers": {
-    "authorization": "Basic YzEzRFA2MVNUN2lnOktDQVc4WE51X3VBUWJCcjVJczRaZzhLOGNXZGNhRVpV",
-    "content-type": "application/json"
-  },
-  //"processData": false,
-  "data": "{\"grant_type\": \"refresh_token\", \"refresh_token\": <refresh_token>}"
-}
-
-//Lyft ajax method
 // var settings = {
 //   "async": true,
 //   "crossDomain": true,
 //   "url": "https://api.lyft.com/oauth/token",
 //   "method": "POST",
 //   "headers": {
-//     "authorization": "Basic YzEzRFA2MVNUN2lnOk1MRVR3VVg1THFaNm1XMXhDRjl0elBvb0JSSThtT1lr",
+//     "authorization": "Basic YzEzRFA2MVNUN2lnOktDQVc4WE51X3VBUWJCcjVJczRaZzhLOGNXZGNhRVpV",
 //     "content-type": "application/json"
 //   },
-//   "processData": false,
-//   "data": "{\"grant_type\": \"client_credentials\", \"scope\": \"public\"}"
+//   //"processData": false,
+//   "data": "{\"grant_type\": \"refresh_token\", \"refresh_token\": <refresh_token>}"
 // }
-// $.ajax(settings).then(function (response) {
-//   console.log(response);
-// });
+
+//Lyft ajax method
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "https://api.lyft.com/oauth/token",
+  "method": "POST",
+  "headers": {
+    "authorization": "Basic YzEzRFA2MVNUN2lnOmF1VlhVa2xvdkJFWllaazhmTmJqaXFiWGlsUGhYX1NY",
+    "content-type": "application/json"
+  },
+  "processData": false,
+  "data": "{\"grant_type\": \"client_credentials\", \"scope\": \"public\"}"
+}
+$.ajax(settings).then(function (response) {
+  console.log(response);
+});
 
 $.ajax(settings).done(function (response) {
   console.log(response);
@@ -318,7 +318,7 @@ function rideETA() {
     "url": "https://api.lyft.com/v1/eta?lat=" + startLatitude + "&lng=" + startLongitude,
     "method": "GET",
     "headers": {
-      "authorization": "Bearer OKDZrlmIJ/Lt2N6Fe67Rc6YA/7N2L+d1H5jY0hWFGHEew7icwqjeJGss9iTVlyrfJEIeNBF3QXuWNO7iNo16yRNwgBDZOINWgt/P/Ac+zY3AYCb4aAL/zM8="
+      "authorization": "Bearer xaPqXu0w7cwuC5FbMRY/svao6kvjmHnnIGdNqhk/cYISp4TBljyB35l5i028Krc6buaZoxmyb4qVUlcs+MJXsDGVQfEt8qvJqZbG3sSeYeX7K93V0cXspqs="
     }
   };
 
@@ -340,7 +340,7 @@ function costEstimate() {
     "url": "https://api.lyft.com/v1/cost?start_lat=" + startLatitude + "&start_lng=" + startLongitude + "&end_lat=" + endLatitude + "&end_lng=" + endLongitude,
     "method": "GET",
     "headers": {
-      "authorization": "Bearer OKDZrlmIJ/Lt2N6Fe67Rc6YA/7N2L+d1H5jY0hWFGHEew7icwqjeJGss9iTVlyrfJEIeNBF3QXuWNO7iNo16yRNwgBDZOINWgt/P/Ac+zY3AYCb4aAL/zM8="
+      "authorization": "Bearer xaPqXu0w7cwuC5FbMRY/svao6kvjmHnnIGdNqhk/cYISp4TBljyB35l5i028Krc6buaZoxmyb4qVUlcs+MJXsDGVQfEt8qvJqZbG3sSeYeX7K93V0cXspqs="
     }
   }
 
