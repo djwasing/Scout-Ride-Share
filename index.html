@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Project 1</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon -->
-    <!-- <link rel="icon" href=" " /> -->
+    <link rel="icon" href="assets/images/sLogoIcon.jpg" />
+    <!-- Font Awesome Link -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <!-- Google Maps API -->
     <!-- <script id="googleMapsHead" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPPq1AhORafo9foQ5zn3m7pf1uVNH4xTM&libraries=places&callback=initAutocomplete"></script>  -->
     <!-- Bootstrap style and JS -->
@@ -18,37 +21,32 @@
     <link rel="stylesheet" type="text/css" media="screen" href="assets/style.css" />
     <!-- Google Maps Script -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPPq1AhORafo9foQ5zn3m7pf1uVNH4xTM&libraries=places"
-     async defer></script>
+        async defer></script>
 </head>
 
 <body>
     <div class="header row">
-        <img class="head1 img-fluid" src="assets/images/scoutLogoWhite.png"/> 
-     </div>
-
-    <div class="jumbotron" id="googlemaps"></div>
-    <div class="row" id="searchBar">
-        <input id="pac-input" class="controls" type="text" placeholder="Enter your destination here">
+        <img class="head1 img-fluid" src="assets/images/scoutLogoWhite.png" />
     </div>
-    
-    <div class="container" id="buttonRow">
-        <button type="button" class="btn-outline-warning btn-lg btn1" id="uberBtn">Get Uber Info</button>
-        <button type="button" class="btn-outline-warning btn-lg btn1" id="lyftBtn">Get Lyft Info</button>
+    <div class="container" id="buttonRow"></div>
+        <div class="jumbotron" id="googlemaps"></div>
+        <div class="row" id="searchBar">
+            <input id="pac-input" class="controls" type="text" placeholder="Enter your destination here">
+        </div>
+        <button type="button" class="btn-outline-secondary btn1" id="goBtn">Go <i class="fas fa-chevron-circle-right"></i></button>
     </div>
 
 
-    
+
     <!-- Firebase link -->
-    <script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script></script>
+    <script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
+    </script>
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
         crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
     <!-- local JS -->
     <script src="assets/app.js"></script>
 </body>
 
 </html>
-
-
-

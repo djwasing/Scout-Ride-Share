@@ -50,7 +50,7 @@ function initAutocomplete() {
   // Create the search box and link it to the UI element.
   var input = document.getElementById('pac-input');
   var searchBox = new google.maps.places.SearchBox(input);
-  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+  //map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);  //commented out to keep the search input area outside the map
 
   // Bias the SearchBox results towards current map's viewport.
   map.addListener('bounds_changed', function () {
@@ -177,9 +177,9 @@ else {
 //Calling the function when uber button is clicked
 $(document).ready(function () {
   initAutocomplete();
-  $("#uberBtn").click(function (e) {
+  $("#goBtn").click(function (e) {
     e.preventDefault();
-
+    //$(".btn1").animate({down: "-=250px"}, "slow");        //not working
     console.log("startLat: " + startLatitude);
     console.log("startLng: " + startLongitude);
     console.log("endLat: " + endLatitude);
@@ -266,25 +266,44 @@ $(document).ready(function () {
 var bearerTK;
 var authO;
 
-$(document).on('click', '#lyftBtn', function () {
+$(document).on('click', '#goBtn', function () {
   event.preventDefault();
   costEstimate();
   rideETA();
 
 });
-//Lyft ajax method
+
+
+//THIS IS A CODE TO REQUEST A NEW TOKEN
 var settings = {
   "async": true,
   "crossDomain": true,
   "url": "https://api.lyft.com/oauth/token",
   "method": "POST",
   "headers": {
-    "authorization": "Basic YzEzRFA2MVNUN2lnOk1MRVR3VVg1THFaNm1XMXhDRjl0elBvb0JSSThtT1lr",
+    "authorization": "Basic YzEzRFA2MVNUN2lnOktDQVc4WE51X3VBUWJCcjVJczRaZzhLOGNXZGNhRVpV",
     "content-type": "application/json"
   },
-  "processData": false,
-  "data": "{\"grant_type\": \"client_credentials\", \"scope\": \"public\"}"
+  //"processData": false,
+  "data": "{\"grant_type\": \"refresh_token\", \"refresh_token\": <refresh_token>}"
 }
+
+//Lyft ajax method
+// var settings = {
+//   "async": true,
+//   "crossDomain": true,
+//   "url": "https://api.lyft.com/oauth/token",
+//   "method": "POST",
+//   "headers": {
+//     "authorization": "Basic YzEzRFA2MVNUN2lnOk1MRVR3VVg1THFaNm1XMXhDRjl0elBvb0JSSThtT1lr",
+//     "content-type": "application/json"
+//   },
+//   "processData": false,
+//   "data": "{\"grant_type\": \"client_credentials\", \"scope\": \"public\"}"
+// }
+// $.ajax(settings).then(function (response) {
+//   console.log(response);
+// });
 
 $.ajax(settings).done(function (response) {
   console.log(response);
@@ -335,19 +354,9 @@ function costEstimate() {
 
 
 
-//THIS IS A CODE TO REQUEST A NEW TOKEN
-//   var settings = {
-//     "async": true,
-//     "crossDomain": true,
-//     "url": "https://api.lyft.com/oauth/token",
-//     "method": "POST",
-//     "headers": {
-//       "authorization": "Basic YzEzRFA2MVNUN2lnOktDQVc4WE51X3VBUWJCcjVJczRaZzhLOGNXZGNhRVpV",
-//       "content-type": "application/json"
-//     },
-//     "data": "{\"grant_type\": \"refresh_token\", \"refresh_token\": <refresh_token>}"
-//   }
 
-//   $.ajax(settings).then(function (response) {
-//     console.log(response);
-//   });
+
+// ------------------------------------------------------
+//                 DOM Manipulation
+// ------------------------------------------------------
+
