@@ -16,11 +16,13 @@ body {
 #googlemaps {
     display: flex;
     justify-content: center;
+
     height: 400px;
     width: 52%;
     margin-left: 5%;
     border: solid #00303F 3px;
     float: left;
+
 }
 
 body {
@@ -80,6 +82,19 @@ body {
     border-radius: 24px;
 }
 
+/* **INSPECT** Changed the color scheme of the buttons
+Just thought it looked better feel free to veto
+-Haydn */
+#uberBtn, #lyftBtn {
+  border-color: rgb(196, 152, 10); 
+  color: rgb(196, 152, 10); 
+  background-color:black;
+  cursor: pointer;
+}
+
+.lyft-ride-option {
+  color: white;
+}
 /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
        #map {
@@ -158,6 +173,7 @@ body {
         width: 345px;
       }
 
+      
 
 
 
