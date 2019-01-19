@@ -16,10 +16,13 @@ body {
 #googlemaps {
     display: flex;
     justify-content: center;
-    height: 350px;
-    width: 50%;
-    margin-left: 18%;
-    border: solid #00303F 6px;
+
+    height: 400px;
+    width: 52%;
+    margin-left: 5%;
+    border: solid #00303F 3px;
+    float: left;
+
 }
 
 body {
@@ -36,8 +39,8 @@ body {
 }
 
 .head1 {
-   margin-left: 3.5%;
-   margin-bottom: 22px;
+   margin-left: 6%;
+   margin-bottom: 18px;
    max-width: 180px;
 }
 
@@ -50,14 +53,21 @@ body {
 
 #buttonRow {
     display: flex;
-    justify-content: center;
-    width: 60%;
-    margin-left: 18px;
-    margin-bottom: 36px;
+    /* justify-content: center; */
+    width: 90%;
+    /* margin-left: 18px;
+    margin-bottom: 36px; */
+    float: left;
+    
 }
 
 .btn1 {
-    margin-right: 20px;    
+    margin-left: 154px; 
+    margin-top: 24px;
+    border-radius: 50px;
+    font-size: 30px;   
+    border: solid #00303F 3px;
+    position: relative;
 }
 
 /* #searchBar {
@@ -138,12 +148,14 @@ Just thought it looked better feel free to veto
       #pac-input {
         background-color: #fff;
         font-family: Roboto;
-        font-size: 15px;
+        font-size: 25px;
         font-weight: 300;
-        margin-left: 12px;
+        margin-left: 18px;
         padding: 0 11px 0 13px;
         text-overflow: ellipsis;
         width: 400px;
+        border: solid #00303F 3px;
+        border-radius: 8px;
       }
 
       #pac-input:focus {

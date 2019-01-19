@@ -50,7 +50,7 @@ function initAutocomplete() {
   // Create the search box and link it to the UI element.
   var input = document.getElementById('pac-input');
   var searchBox = new google.maps.places.SearchBox(input);
-  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+  //map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);  //commented out to keep the search input area outside the map
 
   // Bias the SearchBox results towards current map's viewport.
   map.addListener('bounds_changed', function () {
@@ -177,9 +177,9 @@ else {
 //Calling the function when uber button is clicked
 $(document).ready(function () {
   initAutocomplete();
-  $("#uberBtn").click(function (e) {
+  $("#goBtn").click(function (e) {
     e.preventDefault();
-
+    //$(".btn1").animate({down: "-=250px"}, "slow");        //not working
     console.log("startLat: " + startLatitude);
     console.log("startLng: " + startLongitude);
     console.log("endLat: " + endLatitude);
@@ -210,15 +210,15 @@ $(document).ready(function () {
 
 
       }).then(function (response) {
-        console.log("Price");
+        //console.log("Price");
 
         //Looping through all the prices objects
-        for (var i = 0; i < response.prices.length; i++) {
+        //for (var i = 0; i < response.prices.length; i++) {
 
 
-          console.log(response.prices[i].low_estimate);
+          console.log("UBER cost: " + response.prices[0].low_estimate);
 
-        }
+        //}
       });
 
     }
@@ -235,12 +235,12 @@ $(document).ready(function () {
 
 
       }).then(function (response) {
-        console.log("ETA");
+        // console.log("ETA");
 
         //Looping through all the ETA objects
-        for (var i = 0; i < response.times.length; i++) {
-          console.log(response.times[i].estimate);
-        }
+        //for (var i = 0; i < response.times.length; i++) {
+          console.log("UBER ETAs: " + response.times[0].estimate);
+        //}
       });
 
     }
@@ -268,12 +268,28 @@ var authO;
 var costEstimate;
 var pickupEta;
 
-$(document).on('click', '#lyftBtn', function () {
+$(document).on('click', '#goBtn', function () {
   event.preventDefault();
   costEstimate();
   rideETA();
   // makeLyftBtn();
 });
+
+
+
+//THIS IS A CODE TO REQUEST A NEW TOKEN
+// var settings = {
+//   "async": true,
+//   "crossDomain": true,
+//   "url": "https://api.lyft.com/oauth/token",
+//   "method": "POST",
+//   "headers": {
+//     "authorization": "Basic YzEzRFA2MVNUN2lnOktDQVc4WE51X3VBUWJCcjVJczRaZzhLOGNXZGNhRVpV",
+//     "content-type": "application/json"
+//   },
+//   //"processData": false,
+//   "data": "{\"grant_type\": \"refresh_token\", \"refresh_token\": <refresh_token>}"
+// }
 
 
 
@@ -284,12 +300,17 @@ var settings = {
   "url": "https://api.lyft.com/oauth/token",
   "method": "POST",
   "headers": {
-    "authorization": "Basic YzEzRFA2MVNUN2lnOjRJaXd5N2tzWnN1LV9talpmXzU4UU5hYzlYbEd2NFVH",
+
+    "authorization": "Basic YzEzRFA2MVNUN2lnOmF1VlhVa2xvdkJFWllaazhmTmJqaXFiWGlsUGhYX1NY",
+
     "content-type": "application/json"
   },
   "processData": false,
   "data": "{\"grant_type\": \"client_credentials\", \"scope\": \"public\"}"
 }
+// $.ajax(settings).then(function (response) {
+//   console.log(response);
+// });
 
 $.ajax(settings).done(function (response) {
   console.log(response);
@@ -305,7 +326,9 @@ function rideETA() {
     "url": "https://api.lyft.com/v1/eta?lat=" + startLatitude + "&lng=" + startLongitude,
     "method": "GET",
     "headers": {
-      "authorization": "Bearer KZGj1zIbl6rT9cB7NAuYk2T1STybou3n7SBOw6Tdu9tMgjVq0KkZQ2Kqr7zMUx/cHjjFP/TjctaIET0PteQNs0R+qkVrDGtffxStm8/Q2cyr8vr5MzrdT5s="
+
+      "authorization": "Bearer xaPqXu0w7cwuC5FbMRY/svao6kvjmHnnIGdNqhk/cYISp4TBljyB35l5i028Krc6buaZoxmyb4qVUlcs+MJXsDGVQfEt8qvJqZbG3sSeYeX7K93V0cXspqs="
+
     }
   };
 
@@ -313,7 +336,8 @@ function rideETA() {
     console.log(response);
     pickupEta = response.eta_estimates[0].eta_seconds;
     //code for pickup ETA
-    console.log("ETA: " + pickupEta);
+
+    console.log("LYFT ETA: " + response.eta_estimates[0].eta_seconds);
 
   });
 
@@ -329,7 +353,9 @@ function costEstimate() {
     "url": "https://api.lyft.com/v1/cost?start_lat=" + startLatitude + "&start_lng=" + startLongitude + "&end_lat=" + endLatitude + "&end_lng=" + endLongitude,
     "method": "GET",
     "headers": {
-      "authorization": "Bearer KZGj1zIbl6rT9cB7NAuYk2T1STybou3n7SBOw6Tdu9tMgjVq0KkZQ2Kqr7zMUx/cHjjFP/TjctaIET0PteQNs0R+qkVrDGtffxStm8/Q2cyr8vr5MzrdT5s="
+
+      "authorization": "Bearer xaPqXu0w7cwuC5FbMRY/svao6kvjmHnnIGdNqhk/cYISp4TBljyB35l5i028Krc6buaZoxmyb4qVUlcs+MJXsDGVQfEt8qvJqZbG3sSeYeX7K93V0cXspqs="
+
     }
   }
 
@@ -337,25 +363,20 @@ function costEstimate() {
     console.log(response)
     costEstimate = response.cost_estimates[0].estimated_cost_cents_min + "-" + response.cost_estimates[0].estimated_cost_cents_max;
     //code for cost estimate range
-    console.log("Cost range: " + costEstimate);
+
+    console.log("LYFT cost: " + response.cost_estimates[0].estimated_cost_cents_min);
+
 
   });
 };
 
+// format times and cents to dollars to display results
 
-//THIS IS A CODE TO REQUEST A NEW TOKEN
-//   var settings = {
-//     "async": true,
-//     "crossDomain": true,
-//     "url": "https://api.lyft.com/oauth/token",
-//     "method": "POST",
-//     "headers": {
-//       "authorization": "Basic YzEzRFA2MVNUN2lnOktDQVc4WE51X3VBUWJCcjVJczRaZzhLOGNXZGNhRVpV",
-//       "content-type": "application/json"
-//     },
-//     "data": "{\"grant_type\": \"refresh_token\", \"refresh_token\": <refresh_token>}"
-//   }
 
-//   $.ajax(settings).then(function (response) {
-//     console.log(response);
-//   });
+
+
+// ------------------------------------------------------
+//                 DOM Manipulation
+// ------------------------------------------------------
+
+
