@@ -263,8 +263,8 @@ $(document).ready(function () {
 
 
 
-var bearerTK;
-var authO;
+// var bearerTK;
+// var authO;
 var costEstimate;
 var pickupEta;
 
