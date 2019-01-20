@@ -318,7 +318,7 @@ $(document).ready(function () {
       "url": "https://api.lyft.com/oauth/token",
       "method": "POST",
       "headers": {
-        "authorization": "Basic YzEzRFA2MVNUN2lnOmF1VlhVa2xvdkJFWllaazhmTmJqaXFiWGlsUGhYX1NY",
+        "authorization": "Basic YzEzRFA2MVNUN2lnOjZZNmE1ejZOdUh1b2p3R0xQc3FnY2RHUWhSS09zcFVO",
         "content-type": "application/json"
       },
       "processData": false,
@@ -342,7 +342,7 @@ $(document).ready(function () {
         "url": "https://api.lyft.com/v1/eta?lat=" + startLatitude + "&lng=" + startLongitude,
         "method": "GET",
         "headers": {
-          "authorization": "Bearer xaPqXu0w7cwuC5FbMRY/svao6kvjmHnnIGdNqhk/cYISp4TBljyB35l5i028Krc6buaZoxmyb4qVUlcs+MJXsDGVQfEt8qvJqZbG3sSeYeX7K93V0cXspqs="         
+          "authorization": "Bearer cWg9Rd6+Q5guUrikI/97p9mWfJd78KXRMtAKF9FrpVw/EeapD5Ek8CFb7pZbdUfV4rwJJ6XAWJ6CNOYgnONQLaMKtOJG47AdLmoo0TUPPsKC2TGYynH7xEo="         
         }
       };
 
@@ -369,7 +369,7 @@ $(document).ready(function () {
         "url": "https://api.lyft.com/v1/cost?start_lat=" + startLatitude + "&start_lng=" + startLongitude + "&end_lat=" + endLatitude + "&end_lng=" + endLongitude,
         "method": "GET",
         "headers": {
-          "authorization": "Bearer xaPqXu0w7cwuC5FbMRY/svao6kvjmHnnIGdNqhk/cYISp4TBljyB35l5i028Krc6buaZoxmyb4qVUlcs+MJXsDGVQfEt8qvJqZbG3sSeYeX7K93V0cXspqs="
+          "authorization": "Bearer cWg9Rd6+Q5guUrikI/97p9mWfJd78KXRMtAKF9FrpVw/EeapD5Ek8CFb7pZbdUfV4rwJJ6XAWJ6CNOYgnONQLaMKtOJG47AdLmoo0TUPPsKC2TGYynH7xEo="
         }
       }
 
