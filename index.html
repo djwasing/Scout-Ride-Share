@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <!-- Google Maps API -->
     <!-- <script id="googleMapsHead" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPPq1AhORafo9foQ5zn3m7pf1uVNH4xTM&libraries=places&callback=initAutocomplete"></script>  -->
-    <!-- Bootstrap style and JS -->
+    <!-- Bootstrap style -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" />
     <!-- Google Font link -->
     <link href='https://fonts.googleapis.com/css?family=Corben' rel='stylesheet'>
@@ -33,25 +33,25 @@
             <input id="pac-input" class="controls" type="text" placeholder="Enter your destination here">
         
             <div class="container" id="card-container">
-                <div class="card text-white bg-dark mb-3" id="uber-card" style="max-width: 18rem;">
-                    <div class="card-header">Uber</div>
+                <div class="card bg-light mb-3" id="uber-card" style="max-width: 18rem;">
+                    <div class="card-header"><img class="img-fluid cardLogo" id="uberLogo" src="assets/images/uberLogo.png"/></div>
                     <div class="card-body">
-                        <p>
+                        <p id="results">
                             <strong>Price: </strong>
                             $<span id="uber-price"></span>
                             <strong>ETA: </strong>
-                            <span id="uber-eta"></span> minutes
+                            <span id="uber-eta"></span> min
                         </p>
                     </div>
                 </div>
-                <div class="card text-white bg-info mb-3" id="lyft-card" style="max-width: 18rem;">
-                    <div class="card-header">Lyft</div>
+                <div class="card bg-light" id="lyft-card" style="max-width: 18rem;">
+                    <div class="card-header"><img class="img-fluid cardLogo" id="lyftLogo" src="assets/images/lyftLogo.png"/></div>
                     <div class="card-body">
-                        <p>
+                        <p id="results">
                             <strong>Price: </strong>
                             $<span id="lyft-price"></span>
                             <strong>ETA: </strong>
-                            <span id="lyft-eta"></span> minutes
+                            <span id="lyft-eta"></span> min
                         </p>
                     </div>
                 </div>
@@ -68,8 +68,10 @@
     <script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
     </script>
     <!-- jQuery CDN -->
-    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <!-- jQuery UI Script -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <!-- Bootstrap Script -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
     <!-- local JS -->
     <script src="assets/app.js"></script>
