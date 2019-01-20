@@ -16,8 +16,7 @@ body {
 #googlemaps {
     display: flex;
     justify-content: center;
-
-    height: 400px;
+    height: 440px;
     width: 52%;
     margin-left: 5%;
     border: solid #00303F 3px;
@@ -62,8 +61,8 @@ body {
 }
 
 .btn1 {
-    margin-left: 154px; 
-    margin-top: 24px;
+    margin-left: 95px; 
+    margin-top: 12px;
     border-radius: 50px;
     font-size: 30px;   
     border: solid #00303F 3px;
@@ -173,7 +172,7 @@ Just thought it looked better feel free to veto
         width: 345px;
       }
 
-/* card styling */
+/* --------- card styling ----------- */
 #card-container {
   margin-left: 50px;
 }
@@ -182,14 +181,30 @@ Just thought it looked better feel free to veto
   margin-top: 20px;
 }
 
+#lyft-card {
+  margin-bottom: 0px;
+}
+
 .card {
-  border: 2px solid black;
+  border: solid #00303F 3px;
+  border-radius: 8px;
+  max-height: 150px;
+  max-width: 380px;
 }
 
 .card-header {
-  font-size: 150%;
+  text-align: center;
+}
+
+.cardLogo {
+  max-height: 60px;
 }
 
 #uber-price, #lyft-price {
-  margin-right: 60px;
+  margin-right: 30px;
+}
+
+#results {
+  color: #00303F;
+  font-size: 18px;
 }

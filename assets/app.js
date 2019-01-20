@@ -10,7 +10,7 @@ var config = {
 firebase.initializeApp(config);
 
 var database = firebase.database();
-var map, infoWindow, pos, startLatitude, startLongitude, endLatitude, endLongitude, pickupEta, costEstimate;
+var map, infoWindow, pos, startLatitude, startLongitude, endLatitude, endLongitude, pickupEta, costEstimate, lyftCostDollar, uberPrice;
 
 
 // //-----------------------------------------
@@ -62,9 +62,12 @@ function initAutocomplete() {
   // more details for that place.
   searchBox.addListener('places_changed', function () {
     var places = searchBox.getPlaces();
-
+    //console.log(places);
     if (places.length == 0) {
       return;
+    }
+    else {
+      $("#goBtn").show();
     }
 
     // Clear out the old markers.
@@ -132,13 +135,17 @@ function initAutocomplete() {
     };
   });
 
-  // Try HTML5 geolocation.
+  // Try HTML5 geolocation. -----------------------
 if (navigator.geolocation) {
   navigator.geolocation.getCurrentPosition(function (position) {
     pos = {
       lat: position.coords.latitude,
       lng: position.coords.longitude
     };
+
+    // if (position) {
+    // localStorage.setItem("permissionGranted", "yes"); 
+    // }
 
     infoWindow.setPosition(pos);
     infoWindow.setContent("Your Location");
@@ -176,15 +183,32 @@ else {
 
 //Calling the function when uber button is clicked
 $(document).ready(function () {
+  //check local storage for user location permission
+  // var permissionGranted = localStorage.getItem("permissionGranted");
+  // console.log(permissionGranted);
+
+  
+ 
   initAutocomplete();
+  $("#goBtn, #uber-card, #lyft-card").hide();
+
+  $("#pac-input").on("keyup", function() {
+    var inputVal = $(this).val();
+    if (inputVal === "") {
+      $("#goBtn").hide();
+    }
+  });
+
   $("#goBtn").click(function (e) {
     e.preventDefault();
+    
+    //$("#uberLogo").shake();
     //$(".btn1").animate({down: "-=250px"}, "slow");        //not working
     // console.log("startLat: " + startLatitude);
     // console.log("startLng: " + startLongitude);
     // console.log("endLat: " + endLatitude);
     // console.log("endLng: " + endLongitude);
-
+    $("#uber-card, #lyft-card").slideDown("slow");
     var queryURLETA = "https://api.uber.com/v1.2/estimates/time?start_latitude=" + startLatitude + "&start_longitude=" + startLongitude + "&end_latitude=" + endLatitude + "&end_longitude=" + endLongitude + "&server_token=CYeYg4Brhv5cRtRYESfcC9iRKG9TCDCfZhxASEaS";
     var queryURLPrice = "https://api.uber.com/v1.2/estimates/price?start_latitude=" + startLatitude + "&start_longitude=" + startLongitude + "&end_latitude=" + endLatitude + "&end_longitude=" + endLongitude + "&server_token=CYeYg4Brhv5cRtRYESfcC9iRKG9TCDCfZhxASEaS";
     // console.log("THis is the URL for ETA " + queryURLETA);
@@ -215,10 +239,10 @@ $(document).ready(function () {
         //Looping through all the prices objects
         //for (var i = 0; i < response.prices.length; i++) {
         var uberPrice = response.prices[0].low_estimate;
-        console.log("Uber cost: " + uberPrice);        
-
+        //console.log("Uber cost: " + uberPrice);        
+        $("#uber-price").text(uberPrice);
         //console.log("Uber cost: " + response.prices[0].low_estimate);
-
+        //$("#uberLogo").shake();
         //}
       });
 
@@ -239,8 +263,8 @@ $(document).ready(function () {
         num1 = response.times[0].estimate;
         num2 = 60;
         UberEta = parseInt(num1) / num2;
-        console.log("Uber ETA: " + UberEta + " mins");
-        
+        //console.log("Uber ETA: " + UberEta + " mins");
+        $("#uber-eta").text(UberEta);
         // console.log("ETA");
 
         //Looping through all the ETA objects
@@ -260,28 +284,18 @@ $(document).ready(function () {
     costEstimate();
     rideETA();
 
-  
-
 
 
 // LYFT API and JS -------------------------------------------------------------------------------------
 
 //store username and passcode
 //
-
-
-
 // var bearerTK;
 // var authO;
-
-
-
 // $(document).on('click', '#goBtn', function () {
 //   event.preventDefault();
-  
 //   // makeLyftBtn();
 // });
-
 
 
 //THIS IS A CODE TO REQUEST A NEW TOKEN
@@ -290,17 +304,18 @@ $(document).ready(function () {
 //   "crossDomain": true,
 //   "url": "https://api.lyft.com/oauth/token",
 //   "method": "POST",
+//   //missing --user "<client_id>:<client_secret>",
 //   "headers": {
 //     "authorization": "Basic YzEzRFA2MVNUN2lnOktDQVc4WE51X3VBUWJCcjVJczRaZzhLOGNXZGNhRVpV",
 //     "content-type": "application/json"
 //   },
-//   //"processData": false,
+//   "processData": false,
 //   "data": "{\"grant_type\": \"refresh_token\", \"refresh_token\": <refresh_token>}"
 // }
 
 
 
-//Lyft ajax method
+//------------------Lyft ajax method-------------------
 var settings = {
   "async": true,
   "crossDomain": true,
@@ -319,9 +334,9 @@ var settings = {
 //   console.log(response);
 // });
 
-$.ajax(settings).done(function (response) {
-  //console.log(response);
-});
+// $.ajax(settings).done(function (response) {
+//   console.log(response);
+// });
 
 
 // //ETA estimates for your ride
@@ -343,7 +358,8 @@ function rideETA() {
     num1 = response.eta_estimates[0].eta_seconds;
     num2 = 60;
     LyftEta = parseInt(num1) / num2;
-    console.log("Lyft ETA: " + LyftEta + " mins");
+    //console.log("Lyft ETA: " + LyftEta + " mins");
+    $("#lyft-eta").text(LyftEta);
     //pickupEta = response.eta_estimates[0].eta_seconds;
     //code for pickup ETA
     //console.log(response);
@@ -354,40 +370,63 @@ function rideETA() {
 
 
 //cost estimates for your ride
-function costEstimate() {
-  var settings = {
-    "async": true,
-    "crossDomain": true,
-    //uses google current location that was stored into lat and long variables..... uses destination info from user input
-    "url": "https://api.lyft.com/v1/cost?start_lat=" + startLatitude + "&start_lng=" + startLongitude + "&end_lat=" + endLatitude + "&end_lng=" + endLongitude,
-    "method": "GET",
-    "headers": {
-      "authorization": "Bearer xaPqXu0w7cwuC5FbMRY/svao6kvjmHnnIGdNqhk/cYISp4TBljyB35l5i028Krc6buaZoxmyb4qVUlcs+MJXsDGVQfEt8qvJqZbG3sSeYeX7K93V0cXspqs="
+  function costEstimate() {
+    var settings = {
+      "async": true,
+      "crossDomain": true,
+      //uses google current location that was stored into lat and long variables..... uses destination info from user input
+      "url": "https://api.lyft.com/v1/cost?start_lat=" + startLatitude + "&start_lng=" + startLongitude + "&end_lat=" + endLatitude + "&end_lng=" + endLongitude,
+      "method": "GET",
+      "headers": {
+        "authorization": "Bearer xaPqXu0w7cwuC5FbMRY/svao6kvjmHnnIGdNqhk/cYISp4TBljyB35l5i028Krc6buaZoxmyb4qVUlcs+MJXsDGVQfEt8qvJqZbG3sSeYeX7K93V0cXspqs="
+      }
     }
+
+    $.ajax(settings).then(function (response) {
+      //console.log(response)
+      costEstimate = response.cost_estimates[0].estimated_cost_cents_min + "-" + response.cost_estimates[0].estimated_cost_cents_max;
+      //code for cost estimate range
+      var lyftCost = response.cost_estimates[0].estimated_cost_cents_min;
+      var lyftCostDollar = parseInt(lyftCost) / 100;
+      //console.log("Lyft cost: " + response.cost_estimates[0].estimated_cost_cents_min);
+      //console.log("LYFT cost " + lyftCostDollar);
+      $("#lyft-price").text(lyftCostDollar);
+      
+    });
+    
+  };
+  
+    
+
+});
+
+
+checkLower();
+
+
+});
+
+function checkLower() {
+  var priceLyft = $("#lyft-price").val(); 
+  var priceUber = $("#uber-price").val();
+  if (priceLyft && priceUber > 1) {
+    console.log(priceLyft);
+    console.log(priceUber);
+    
+    if (priceLyft < priceUber) {
+      $("#lyftLogo").effect("pulsate", 5000);
+    }
+    else {
+      $("#uberLogo").effect("pulsate", 5000);
+   }
   }
-
-  $.ajax(settings).then(function (response) {
-    //console.log(response)
-    costEstimate = response.cost_estimates[0].estimated_cost_cents_min + "-" + response.cost_estimates[0].estimated_cost_cents_max;
-    //code for cost estimate range
-    var lyftCost = response.cost_estimates[0].estimated_cost_cents_min;
-    var lyftCostDollar = lyftCost / 100;
-    //console.log("Lyft cost: " + response.cost_estimates[0].estimated_cost_cents_min);
-    console.log("LYFT cost " + lyftCostDollar);
-
-  });
 };
-});
-
-});
-
-// format times and cents to dollars to display results
 
 
 
 
-// ------------------------------------------------------
-//                 DOM Manipulation
-// ------------------------------------------------------
+
+
+
 
 
