@@ -214,9 +214,10 @@ $(document).ready(function () {
 
         //Looping through all the prices objects
         //for (var i = 0; i < response.prices.length; i++) {
+        var uberPrice = response.prices[0].low_estimate;
+        console.log("Uber cost: " + uberPrice);        
 
-
-          console.log("Uber cost: " + response.prices[0].low_estimate);
+        //console.log("Uber cost: " + response.prices[0].low_estimate);
 
         //}
       });
@@ -361,9 +362,7 @@ function costEstimate() {
     "url": "https://api.lyft.com/v1/cost?start_lat=" + startLatitude + "&start_lng=" + startLongitude + "&end_lat=" + endLatitude + "&end_lng=" + endLongitude,
     "method": "GET",
     "headers": {
-
       "authorization": "Bearer xaPqXu0w7cwuC5FbMRY/svao6kvjmHnnIGdNqhk/cYISp4TBljyB35l5i028Krc6buaZoxmyb4qVUlcs+MJXsDGVQfEt8qvJqZbG3sSeYeX7K93V0cXspqs="
-
     }
   }
 
@@ -371,9 +370,10 @@ function costEstimate() {
     //console.log(response)
     costEstimate = response.cost_estimates[0].estimated_cost_cents_min + "-" + response.cost_estimates[0].estimated_cost_cents_max;
     //code for cost estimate range
-
-    console.log("Lyft cost: " + response.cost_estimates[0].estimated_cost_cents_min);
-
+    var lyftCost = response.cost_estimates[0].estimated_cost_cents_min;
+    var lyftCostDollar = lyftCost / 100;
+    //console.log("Lyft cost: " + response.cost_estimates[0].estimated_cost_cents_min);
+    console.log("LYFT cost " + lyftCostDollar);
 
   });
 };
