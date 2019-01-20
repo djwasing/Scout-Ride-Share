@@ -12,13 +12,6 @@ firebase.initializeApp(config);
 var database = firebase.database();
 var map, infoWindow, pos, startLatitude, startLongitude, endLatitude, endLongitude, pickupEta, costEstimate, lyftCostDollar, uberPrice;
 
-// comment out the console.log in thr function to toggle all console logs
-
-function logs(...messages) {
-
-  console.log(...messages);
-
-};
 
 // //-----------------------------------------
 
@@ -69,7 +62,7 @@ function initAutocomplete() {
   // more details for that place.
   searchBox.addListener('places_changed', function () {
     var places = searchBox.getPlaces();
-    logs(places);
+    //console.log(places);
     if (places.length == 0) {
       return;
     }
@@ -99,8 +92,8 @@ function initAutocomplete() {
         anchor: new google.maps.Point(17, 34),
         scaledSize: new google.maps.Size(25, 25)
       };
-      logs("newLat: " + place.geometry.location.lat());
-      logs("newLng: " + place.geometry.location.lng());
+      //console.log("newLat: " + place.geometry.location.lat());
+      //console.log("newLng: " + place.geometry.location.lng());
       endLatitude = (place.geometry.location.lat());
       endLongitude = (place.geometry.location.lng());
       // Create a marker for each place.
@@ -184,13 +177,19 @@ function initAutocomplete() {
 //   infoWindow.open(map);
 // }
 
+
+//Function to activate and deactivate console logs
+// function logs(...messages) {
+//   console.log(...messages)
+// };
+
 //-----------UBER API info------------
 
 //Calling the function when uber button is clicked
 $(document).ready(function () {
   //check local storage for user location permission
   // var permissionGranted = localStorage.getItem("permissionGranted");
-  logs(permissionGranted);
+  // console.log(permissionGranted);
   initAutocomplete();
   $("#goBtn, #uber-card, #lyft-card").hide();
 
@@ -206,14 +205,14 @@ $(document).ready(function () {
 
     //$("#uberLogo").shake();
     //$(".btn1").animate({down: "-=250px"}, "slow");        //not working
-    logs("startLat: " + startLatitude);
-    logs("startLng: " + startLongitude);
-    logs("endLat: " + endLatitude);
-    logs("endLng: " + endLongitude);
+    // console.log("startLat: " + startLatitude);
+    // console.log("startLng: " + startLongitude);
+    // console.log("endLat: " + endLatitude);
+    // console.log("endLng: " + endLongitude);
     $("#uber-card, #lyft-card").slideDown("slow");
     var queryURLETA = "https://api.uber.com/v1.2/estimates/time?start_latitude=" + startLatitude + "&start_longitude=" + startLongitude + "&end_latitude=" + endLatitude + "&end_longitude=" + endLongitude + "&server_token=CYeYg4Brhv5cRtRYESfcC9iRKG9TCDCfZhxASEaS";
     var queryURLPrice = "https://api.uber.com/v1.2/estimates/price?start_latitude=" + startLatitude + "&start_longitude=" + startLongitude + "&end_latitude=" + endLatitude + "&end_longitude=" + endLongitude + "&server_token=CYeYg4Brhv5cRtRYESfcC9iRKG9TCDCfZhxASEaS";
-    logs("THis is the URL for ETA " + queryURLETA);
+    // console.log("THis is the URL for ETA " + queryURLETA);
 
 
     jQuery.ajaxPrefilter(function (options) {
@@ -234,14 +233,14 @@ $(document).ready(function () {
         crossDomain: true,
         //beforeSend: setHeader, 
         }).then(function (response) {
-          logs("Price");
+          //console.log("Price");
 
           //Looping through all the prices objects
           //for (var i = 0; i < response.prices.length; i++) {
           var uberPrice = response.prices[0].low_estimate;
-          logs("Uber cost: " + uberPrice);        
+          //console.log("Uber cost: " + uberPrice);        
           $("#uber-price").text(uberPrice);
-          logs("Uber cost: " + response.prices[0].low_estimate);
+          //console.log("Uber cost: " + response.prices[0].low_estimate);
           //$("#uberLogo").shake();
           //}
         });
@@ -261,13 +260,13 @@ $(document).ready(function () {
         num1 = response.times[0].estimate;
         num2 = 60;
         UberEta = parseInt(num1) / num2;
-        logs("Uber ETA: " + UberEta + " mins");
+        //console.log("Uber ETA: " + UberEta + " mins");
         $("#uber-eta").text(UberEta);
-        logs("ETA");
+        // console.log("ETA");
 
         //Looping through all the ETA objects
         //for (var i = 0; i < response.times.length; i++) {
-        logs("UBER ETA: " + response.times[0].estimate);
+        //console.log("UBER ETA: " + response.times[0].estimate);
         //}
       });
     }
@@ -351,12 +350,12 @@ $(document).ready(function () {
         num1 = response.eta_estimates[0].eta_seconds;
         num2 = 60;
         LyftEta = parseInt(num1) / num2;
-        logs("Lyft ETA: " + LyftEta + " mins");
+        //console.log("Lyft ETA: " + LyftEta + " mins");
         $("#lyft-eta").text(LyftEta);
         //pickupEta = response.eta_estimates[0].eta_seconds;
         //code for pickup ETA
-        logs(response);
-        logs("LYFT ETA: " + response.eta_estimates[0].eta_seconds);
+        //console.log(response);
+        //console.log("LYFT ETA: " + response.eta_estimates[0].eta_seconds);
       });
     };
 
@@ -375,13 +374,13 @@ $(document).ready(function () {
       }
 
       $.ajax(settings).then(function (response) {
-        logs(response)
+        //console.log(response)
         costEstimate = response.cost_estimates[0].estimated_cost_cents_min + "-" + response.cost_estimates[0].estimated_cost_cents_max;
         //code for cost estimate range
         var lyftCost = response.cost_estimates[0].estimated_cost_cents_min;
         var lyftCostDollar = parseInt(lyftCost) / 100;
-        logs("Lyft cost: " + response.cost_estimates[0].estimated_cost_cents_min);
-        logs("LYFT cost " + lyftCostDollar);
+        //console.log("Lyft cost: " + response.cost_estimates[0].estimated_cost_cents_min);
+        //console.log("LYFT cost " + lyftCostDollar);
         $("#lyft-price").text(lyftCostDollar);
       })
     };
