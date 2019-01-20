@@ -173,47 +173,23 @@ Just thought it looked better feel free to veto
         width: 345px;
       }
 
-      
-
-
-
-/* results page */
-
-#results-jumbo {
-
-  justify-content: center;
-  text-align: center;
-  margin-top: 50px;
-  background-image: url("https://images.pexels.com/photos/399636/pexels-photo-399636.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
-
+/* card styling */
+#card-container {
+  margin-left: 50px;
 }
 
-
-#results-header {
-  background-color: #1f2833;
-  color: #66FCF1;
-  width: 100%;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  border: 2px solid #66FCF1;
-}
-
-.card-deck {
-  justify-content: space-evenly;
+#uber-card {
   margin-top: 20px;
 }
 
 .card {
-  border: 1px solid #66FCF1;
+  border: 2px solid black;
 }
 
 .card-header {
-  font-size: 200%;
+  font-size: 150%;
 }
 
-.btn-info, .btn-dark {
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 40px;
-  padding-right: 40px;
+#uber-price, #lyft-price {
+  margin-right: 60px;
 }
