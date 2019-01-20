@@ -32,7 +32,32 @@
         <div class="jumbotron" id="googlemaps"></div>
         <div class="row" id="searchBar">
             <input id="pac-input" class="controls" type="text" placeholder="Enter your destination here">
-        </div>
+        
+            <div class="container" id="card-container">
+                <div class="card text-white bg-dark mb-3" id="uber-card" style="max-width: 18rem;">
+                    <div class="card-header">Uber</div>
+                    <div class="card-body">
+                        <p>
+                            <strong>Price: </strong>
+                            $<span id="uber-price"></span>
+                            <strong>ETA: </strong>
+                            <span id="uber-eta"></span> minutes
+                        </p>
+                    </div>
+                </div>
+                <div class="card text-white bg-info mb-3" id="lyft-card" style="max-width: 18rem;">
+                    <div class="card-header">Lyft</div>
+                    <div class="card-body">
+                        <p>
+                            <strong>Price: </strong>
+                            $<span id="lyft-price"></span>
+                            <strong>ETA: </strong>
+                            <span id="lyft-eta"></span> minutes
+                        </p>
+                    </div>
+                </div>
+        
+        
         <button type="button" class="btn-outline-secondary btn1" id="goBtn">Go <i class="fas fa-chevron-circle-right"></i></button>
     </div>
     <div class="lyft-ride-option">
