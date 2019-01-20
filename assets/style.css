@@ -16,7 +16,7 @@ body {
 #googlemaps {
     display: flex;
     justify-content: center;
-    height: 440px;
+    height: 420px;
     width: 52%;
     margin-left: 5%;
     border: solid #00303F 3px;
@@ -67,6 +67,7 @@ body {
     font-size: 30px;   
     border: solid #00303F 3px;
     position: relative;
+    color: #00303F;
 }
 
 /* #searchBar {
@@ -178,11 +179,11 @@ Just thought it looked better feel free to veto
 }
 
 #uber-card {
-  margin-top: 20px;
+  margin-top: 12px;
 }
 
 #lyft-card {
-  margin-bottom: 0px;
+  margin-top: -2px;
 }
 
 .card {
@@ -201,10 +202,10 @@ Just thought it looked better feel free to veto
 }
 
 #uber-price, #lyft-price {
-  margin-right: 30px;
+  margin-right: 18px;
 }
 
 #results {
   color: #00303F;
-  font-size: 18px;
+  font-size: 22px;
 }

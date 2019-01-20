@@ -118,13 +118,13 @@ function initAutocomplete() {
     function calculateAndDisplayRoute(directionsService, directionsDisplay) {
       var selectedMode = "DRIVING";
       directionsService.route({
-        origin: {lat: startLatitude, lng: startLongitude},  // Current location
-        destination: {lat: endLatitude, lng: endLongitude},  // Destination
+        origin: { lat: startLatitude, lng: startLongitude },  // Current location
+        destination: { lat: endLatitude, lng: endLongitude },  // Destination
         // Note that Javascript allows us to access the constant
         // using square brackets and a string value as its
         // "property."
         travelMode: google.maps.TravelMode[selectedMode]
-      }, function(response, status) {
+      }, function (response, status) {
         if (status == 'OK') {
           directionsDisplay.setDirections(response);
           infoWindow.close();
@@ -136,33 +136,33 @@ function initAutocomplete() {
   });
 
   // Try HTML5 geolocation. -----------------------
-if (navigator.geolocation) {
-  navigator.geolocation.getCurrentPosition(function (position) {
-    pos = {
-      lat: position.coords.latitude,
-      lng: position.coords.longitude
-    };
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function (position) {
+      pos = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
 
-    // if (position) {
-    // localStorage.setItem("permissionGranted", "yes"); 
-    // }
+      // if (position) {
+      // localStorage.setItem("permissionGranted", "yes"); 
+      // }
 
-    infoWindow.setPosition(pos);
-    infoWindow.setContent("Your Location");
-    infoWindow.open(map);
-    map.setCenter(pos);
-    startLatitude = (pos.lat);
-    startLongitude = (pos.lng);
-  }, function () {
-    handleLocationError(true, infoWindow, map.getCenter());
-  });
+      infoWindow.setPosition(pos);
+      infoWindow.setContent("Your Location");
+      infoWindow.open(map);
+      map.setCenter(pos);
+      startLatitude = (pos.lat);
+      startLongitude = (pos.lng);
+    }, function () {
+      handleLocationError(true, infoWindow, map.getCenter());
+    });
 
-}
+  }
 
-else {
-  // Browser doesn’t support Geolocation
-  handleLocationError(false, infoWindow, map.getCenter());
-}
+  else {
+    // Browser doesn’t support Geolocation
+    handleLocationError(false, infoWindow, map.getCenter());
+  }
 }
 
 
@@ -177,22 +177,23 @@ else {
 //   infoWindow.open(map);
 // }
 
-//UBER API info
 
+//Function to activate and deactivate console logs
+// function logs(...messages) {
+//   console.log(...messages)
+// };
 
+//-----------UBER API info------------
 
 //Calling the function when uber button is clicked
 $(document).ready(function () {
   //check local storage for user location permission
   // var permissionGranted = localStorage.getItem("permissionGranted");
   // console.log(permissionGranted);
-
-  
- 
   initAutocomplete();
   $("#goBtn, #uber-card, #lyft-card").hide();
 
-  $("#pac-input").on("keyup", function() {
+  $("#pac-input").on("keyup", function () {
     var inputVal = $(this).val();
     if (inputVal === "") {
       $("#goBtn").hide();
@@ -201,7 +202,7 @@ $(document).ready(function () {
 
   $("#goBtn").click(function (e) {
     e.preventDefault();
-    
+
     //$("#uberLogo").shake();
     //$(".btn1").animate({down: "-=250px"}, "slow");        //not working
     // console.log("startLat: " + startLatitude);
@@ -231,22 +232,20 @@ $(document).ready(function () {
         url: queryURLPrice,
         crossDomain: true,
         //beforeSend: setHeader, 
+        }).then(function (response) {
+          //console.log("Price");
 
+          //Looping through all the prices objects
+          //for (var i = 0; i < response.prices.length; i++) {
+          var uberPrice = response.prices[0].low_estimate;
+          //console.log("Uber cost: " + uberPrice);        
+          $("#uber-price").text(uberPrice);
+          //console.log("Uber cost: " + response.prices[0].low_estimate);
+          //$("#uberLogo").shake();
+          //}
+        });
+      }
 
-      }).then(function (response) {
-        //console.log("Price");
-
-        //Looping through all the prices objects
-        //for (var i = 0; i < response.prices.length; i++) {
-        var uberPrice = response.prices[0].low_estimate;
-        //console.log("Uber cost: " + uberPrice);        
-        $("#uber-price").text(uberPrice);
-        //console.log("Uber cost: " + response.prices[0].low_estimate);
-        //$("#uberLogo").shake();
-        //}
-      });
-
-    }
     //Function calling the Uber ETA for Times
     function uberTestETA() {
 
@@ -257,9 +256,7 @@ $(document).ready(function () {
         url: queryURLETA,
         crossDomain: true,
         //beforeSend: setHeader, 
-
-
-      }).then(function (response) {
+        }).then(function (response) {
         num1 = response.times[0].estimate;
         num2 = 60;
         UberEta = parseInt(num1) / num2;
@@ -269,10 +266,9 @@ $(document).ready(function () {
 
         //Looping through all the ETA objects
         //for (var i = 0; i < response.times.length; i++) {
-          //console.log("UBER ETA: " + response.times[0].estimate);
+        //console.log("UBER ETA: " + response.times[0].estimate);
         //}
       });
-
     }
 
     //Function to set the header for the authorization key
@@ -286,147 +282,132 @@ $(document).ready(function () {
 
 
 
-// LYFT API and JS -------------------------------------------------------------------------------------
+    // LYFT API and JS -------------------------------------------------------------------------------------
 
-//store username and passcode
-//
-// var bearerTK;
-// var authO;
-// $(document).on('click', '#goBtn', function () {
-//   event.preventDefault();
-//   // makeLyftBtn();
-// });
-
-
-//THIS IS A CODE TO REQUEST A NEW TOKEN
-// var settings = {
-//   "async": true,
-//   "crossDomain": true,
-//   "url": "https://api.lyft.com/oauth/token",
-//   "method": "POST",
-//   //missing --user "<client_id>:<client_secret>",
-//   "headers": {
-//     "authorization": "Basic YzEzRFA2MVNUN2lnOktDQVc4WE51X3VBUWJCcjVJczRaZzhLOGNXZGNhRVpV",
-//     "content-type": "application/json"
-//   },
-//   "processData": false,
-//   "data": "{\"grant_type\": \"refresh_token\", \"refresh_token\": <refresh_token>}"
-// }
+    //store username and passcode
+    //
+    // var bearerTK;
+    // var authO;
+    // $(document).on('click', '#goBtn', function () {
+    //   event.preventDefault();
+    //   // makeLyftBtn();
+    // });
 
 
-
-//------------------Lyft ajax method-------------------
-var settings = {
-  "async": true,
-  "crossDomain": true,
-  "url": "https://api.lyft.com/oauth/token",
-  "method": "POST",
-  "headers": {
-
-    "authorization": "Basic YzEzRFA2MVNUN2lnOmF1VlhVa2xvdkJFWllaazhmTmJqaXFiWGlsUGhYX1NY",
-
-    "content-type": "application/json"
-  },
-  "processData": false,
-  "data": "{\"grant_type\": \"client_credentials\", \"scope\": \"public\"}"
-}
-// $.ajax(settings).then(function (response) {
-//   console.log(response);
-// });
-
-// $.ajax(settings).done(function (response) {
-//   console.log(response);
-// });
+    //THIS IS A CODE TO REQUEST A NEW TOKEN
+    // var settings = {
+    //   "async": true,
+    //   "crossDomain": true,
+    //   "url": "https://api.lyft.com/oauth/token",
+    //   "method": "POST",
+    //   //missing --user "<client_id>:<client_secret>",
+    //   "headers": {
+    //     "authorization": "Basic YzEzRFA2MVNUN2lnOktDQVc4WE51X3VBUWJCcjVJczRaZzhLOGNXZGNhRVpV",
+    //     "content-type": "application/json"
+    //   },
+    //   "processData": false,
+    //   "data": "{\"grant_type\": \"refresh_token\", \"refresh_token\": <refresh_token>}"
+    // }
 
 
-// //ETA estimates for your ride
-function rideETA() {
-  var settings = {
-    "async": true,
-    "crossDomain": true,
-    //uses google current location that was stored into lat and long variables
-    "url": "https://api.lyft.com/v1/eta?lat=" + startLatitude + "&lng=" + startLongitude,
-    "method": "GET",
-    "headers": {
 
-      "authorization": "Bearer xaPqXu0w7cwuC5FbMRY/svao6kvjmHnnIGdNqhk/cYISp4TBljyB35l5i028Krc6buaZoxmyb4qVUlcs+MJXsDGVQfEt8qvJqZbG3sSeYeX7K93V0cXspqs="
-
-    }
-  };
-
-  $.ajax(settings).then(function (response) {
-    num1 = response.eta_estimates[0].eta_seconds;
-    num2 = 60;
-    LyftEta = parseInt(num1) / num2;
-    //console.log("Lyft ETA: " + LyftEta + " mins");
-    $("#lyft-eta").text(LyftEta);
-    //pickupEta = response.eta_estimates[0].eta_seconds;
-    //code for pickup ETA
-    //console.log(response);
-    //console.log("LYFT ETA: " + response.eta_estimates[0].eta_seconds);
-  });
-
-};
-
-
-//cost estimates for your ride
-  function costEstimate() {
+    //------------------Lyft ajax method-------------------
     var settings = {
       "async": true,
       "crossDomain": true,
-      //uses google current location that was stored into lat and long variables..... uses destination info from user input
-      "url": "https://api.lyft.com/v1/cost?start_lat=" + startLatitude + "&start_lng=" + startLongitude + "&end_lat=" + endLatitude + "&end_lng=" + endLongitude,
-      "method": "GET",
+      "url": "https://api.lyft.com/oauth/token",
+      "method": "POST",
       "headers": {
-        "authorization": "Bearer xaPqXu0w7cwuC5FbMRY/svao6kvjmHnnIGdNqhk/cYISp4TBljyB35l5i028Krc6buaZoxmyb4qVUlcs+MJXsDGVQfEt8qvJqZbG3sSeYeX7K93V0cXspqs="
+        "authorization": "Basic YzEzRFA2MVNUN2lnOmF1VlhVa2xvdkJFWllaazhmTmJqaXFiWGlsUGhYX1NY",
+        "content-type": "application/json"
+      },
+      "processData": false,
+      "data": "{\"grant_type\": \"client_credentials\", \"scope\": \"public\"}"
+    }
+    // $.ajax(settings).then(function (response) {
+    //   console.log(response);
+    // });
+
+    // $.ajax(settings).done(function (response) {
+    //   console.log(response);
+    // });
+
+
+    // //ETA estimates for your ride
+    function rideETA() {
+      var settings = {
+        "async": true,
+        "crossDomain": true,
+        //uses google current location that was stored into lat and long variables
+        "url": "https://api.lyft.com/v1/eta?lat=" + startLatitude + "&lng=" + startLongitude,
+        "method": "GET",
+        "headers": {
+          "authorization": "Bearer xaPqXu0w7cwuC5FbMRY/svao6kvjmHnnIGdNqhk/cYISp4TBljyB35l5i028Krc6buaZoxmyb4qVUlcs+MJXsDGVQfEt8qvJqZbG3sSeYeX7K93V0cXspqs="         
+        }
+      };
+
+      $.ajax(settings).then(function (response) {
+        num1 = response.eta_estimates[0].eta_seconds;
+        num2 = 60;
+        LyftEta = parseInt(num1) / num2;
+        //console.log("Lyft ETA: " + LyftEta + " mins");
+        $("#lyft-eta").text(LyftEta);
+        //pickupEta = response.eta_estimates[0].eta_seconds;
+        //code for pickup ETA
+        //console.log(response);
+        //console.log("LYFT ETA: " + response.eta_estimates[0].eta_seconds);
+      });
+    };
+
+
+    //cost estimates for your ride
+    function costEstimate() {
+      var settings = {
+        "async": true,
+        "crossDomain": true,
+        //uses google current location that was stored into lat and long variables..... uses destination info from user input
+        "url": "https://api.lyft.com/v1/cost?start_lat=" + startLatitude + "&start_lng=" + startLongitude + "&end_lat=" + endLatitude + "&end_lng=" + endLongitude,
+        "method": "GET",
+        "headers": {
+          "authorization": "Bearer xaPqXu0w7cwuC5FbMRY/svao6kvjmHnnIGdNqhk/cYISp4TBljyB35l5i028Krc6buaZoxmyb4qVUlcs+MJXsDGVQfEt8qvJqZbG3sSeYeX7K93V0cXspqs="
+        }
       }
-    }
 
-    $.ajax(settings).then(function (response) {
-      //console.log(response)
-      costEstimate = response.cost_estimates[0].estimated_cost_cents_min + "-" + response.cost_estimates[0].estimated_cost_cents_max;
-      //code for cost estimate range
-      var lyftCost = response.cost_estimates[0].estimated_cost_cents_min;
-      var lyftCostDollar = parseInt(lyftCost) / 100;
-      //console.log("Lyft cost: " + response.cost_estimates[0].estimated_cost_cents_min);
-      //console.log("LYFT cost " + lyftCostDollar);
-      $("#lyft-price").text(lyftCostDollar);
-      
-    });
-    
-  };
-  
-    
+      $.ajax(settings).then(function (response) {
+        //console.log(response)
+        costEstimate = response.cost_estimates[0].estimated_cost_cents_min + "-" + response.cost_estimates[0].estimated_cost_cents_max;
+        //code for cost estimate range
+        var lyftCost = response.cost_estimates[0].estimated_cost_cents_min;
+        var lyftCostDollar = parseInt(lyftCost) / 100;
+        //console.log("Lyft cost: " + response.cost_estimates[0].estimated_cost_cents_min);
+        //console.log("LYFT cost " + lyftCostDollar);
+        $("#lyft-price").text(lyftCostDollar);
+      })
+    };
+  });
 
-});
+  checkVal();
 
+  function checkLower() {
+    var priceLyft = $("#lyft-price").val(); 
+    var priceUber = $("#uber-price").val();
+    var uberNum = parseInt(priceUber);
+    var lyftNum = parseInt(priceLyft);
 
-checkLower();
-
-
-});
-
-function checkLower() {
-  var priceLyft = $("#lyft-price").val(); 
-  var priceUber = $("#uber-price").val();
-  if (priceLyft && priceUber > 1) {
-    console.log(priceLyft);
-    console.log(priceUber);
-    
-    if (priceLyft < priceUber) {
+    if (lyftNum < uberNum) {
       $("#lyftLogo").effect("pulsate", 5000);
-    }
-    else {
+     }
+    if (uberNum < lyftNum) {
       $("#uberLogo").effect("pulsate", 5000);
-   }
+    }
   }
-};
 
+  function checkVal() {
+    if (lyftNum !== null && uberNum !== null) {
+      checkLower();
+    }
+  }
+  
 
-
-
-
-
-
-
-
+  
+});
