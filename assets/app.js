@@ -13,6 +13,15 @@ var config = {
   var map, infoWindow, pos, startLatitude, startLongitude, endLatitude, endLongitude, pickupEta, costEstimate, lyftCostDollar, uberPrice;
   
   // //-----------------------------------------
+
+//Haydn's edit:
+//moved the api methods to the top and inside a callAPI function
+//call the function at line 257 so that the api will begin gathering info when we choose a destination
+// then click go to reveal the cards and run the check lower function
+//added the data attr to the span like dylan suggested
+
+
+
   function callAPI() {
   var queryURLETA = "https://api.uber.com/v1.2/estimates/time?start_latitude=" + startLatitude + "&start_longitude=" + startLongitude + "&end_latitude=" + endLatitude + "&end_longitude=" + endLongitude + "&server_token=CYeYg4Brhv5cRtRYESfcC9iRKG9TCDCfZhxASEaS";
   var queryURLPrice = "https://api.uber.com/v1.2/estimates/price?start_latitude=" + startLatitude + "&start_longitude=" + startLongitude + "&end_latitude=" + endLatitude + "&end_longitude=" + endLongitude + "&server_token=CYeYg4Brhv5cRtRYESfcC9iRKG9TCDCfZhxASEaS";
@@ -111,7 +120,7 @@ var config = {
   "url": "https://api.lyft.com/v1/eta?lat=" + startLatitude + "&lng=" + startLongitude,
   "method": "GET",
   "headers": {
-  "authorization": "Bearer hZvMTsNT+ZMyLJGpSrv4dR1leZQ2MQ9T7l8G6d1laSatFvQCuIwRFVGcUejQV6KYZRK9SEPhBYmHAtplQ4L1gP9LJse4t0g/L3l5/LUG6CwQDLYqcuQnucs=" 
+  "authorization": "Bearer tz21hBcBLLjkpdk7Z5J3GQthgHwiE9OEvMaak7EL5H4PRIDYBCSvDyG/DMOw2m3LoUwTUpqrs84Nb9VOarUxLzTynevaP1f+4tMMIjYKgQ+RHjCej0YW8Yg=" 
   }
   };
   
@@ -133,7 +142,7 @@ var config = {
   "url": "https://api.lyft.com/v1/cost?start_lat=" + startLatitude + "&start_lng=" + startLongitude + "&end_lat=" + endLatitude + "&end_lng=" + endLongitude,
   "method": "GET",
   "headers": {
-  "authorization": "Bearer hZvMTsNT+ZMyLJGpSrv4dR1leZQ2MQ9T7l8G6d1laSatFvQCuIwRFVGcUejQV6KYZRK9SEPhBYmHAtplQ4L1gP9LJse4t0g/L3l5/LUG6CwQDLYqcuQnucs="
+  "authorization": "Bearer tz21hBcBLLjkpdk7Z5J3GQthgHwiE9OEvMaak7EL5H4PRIDYBCSvDyG/DMOw2m3LoUwTUpqrs84Nb9VOarUxLzTynevaP1f+4tMMIjYKgQ+RHjCej0YW8Yg="
   }
   }
   
