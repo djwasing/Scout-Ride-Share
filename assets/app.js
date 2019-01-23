@@ -120,7 +120,7 @@ function callAPI() {
       "url": "https://api.lyft.com/v1/eta?lat=" + startLatitude + "&lng=" + startLongitude,
       "method": "GET",
       "headers": {
-        "authorization": "Bearer tz21hBcBLLjkpdk7Z5J3GQthgHwiE9OEvMaak7EL5H4PRIDYBCSvDyG/DMOw2m3LoUwTUpqrs84Nb9VOarUxLzTynevaP1f+4tMMIjYKgQ+RHjCej0YW8Yg="
+        "authorization": "Bearer Mz1nsB2cDxgr7oroeNGotsmeOmUYpIyXihuixpqbRSBpvncuH1GESQhqYAcrIiHgyQTpFTqiIxILL1EOk9TdEVazWW2sez02DxUqvAXkq4wxEAVM9ohW+3M="
       }
     };
 
@@ -142,7 +142,7 @@ function callAPI() {
       "url": "https://api.lyft.com/v1/cost?start_lat=" + startLatitude + "&start_lng=" + startLongitude + "&end_lat=" + endLatitude + "&end_lng=" + endLongitude,
       "method": "GET",
       "headers": {
-        "authorization": "Bearer tz21hBcBLLjkpdk7Z5J3GQthgHwiE9OEvMaak7EL5H4PRIDYBCSvDyG/DMOw2m3LoUwTUpqrs84Nb9VOarUxLzTynevaP1f+4tMMIjYKgQ+RHjCej0YW8Yg="
+        "authorization": "Bearer Mz1nsB2cDxgr7oroeNGotsmeOmUYpIyXihuixpqbRSBpvncuH1GESQhqYAcrIiHgyQTpFTqiIxILL1EOk9TdEVazWW2sez02DxUqvAXkq4wxEAVM9ohW+3M="
       }
     }
 
