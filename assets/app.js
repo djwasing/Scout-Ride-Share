@@ -257,6 +257,8 @@ function initAutocomplete() {
           directionsDisplay.setDirections(response);
           infoWindow.close();
           callAPI();
+          $("#uber-card, #lyft-card").slideUp("slow");
+          $("#lyft-price, #lyft-eta, #uber-price, #uber-eta").empty();
         } else {
           window.alert('Directions request failed due to ' + status);
         }
@@ -310,9 +312,9 @@ $(document).ready(function () {
 
 
   function checkLower() {
-    var priceLyft = $("#lyft-price").data("price");
+    var priceLyft = $("#lyft-price").attr("data-price");
     console.log(priceLyft);
-    var priceUber = $("#uber-price").data("price");
+    var priceUber = $("#uber-price").attr("data-price");
     console.log(priceUber);
     var uberNum = parseInt(priceUber);
     var lyftNum = parseInt(priceLyft);
@@ -322,5 +324,6 @@ $(document).ready(function () {
     if (uberNum < lyftNum) {
       $("#uberLogo").effect("pulsate", 5000);
     }
+
   }
 });
