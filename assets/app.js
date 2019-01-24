@@ -20,6 +20,11 @@ var config = {
 // then click go to reveal the cards and run the check lower function
 //added the data attr to the span like dylan suggested
 function getLyftSettings() {
+  jQuery.ajaxPrefilter(function (options) {
+    if (options.crossDomain && jQuery.support.cors) {
+      options.url = 'https://cors-anywhere.herokuapp.com/' + options.url;
+    }
+  });
   var settings = {
     "async": true,
     "crossDomain": true,
