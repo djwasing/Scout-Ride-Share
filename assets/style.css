@@ -17,7 +17,7 @@ body {
     display: flex;
     justify-content: center;
     height: 420px;
-    width: 52%;
+    width: 100%;
     margin-left: 5%;
     border: solid #00303F 3px;
     float: left;
