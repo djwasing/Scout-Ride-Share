@@ -1,16 +1,5 @@
-body {
-  background-color: #1f2833;
-  background-image: linear-gradient(120deg, #161c24, #203144, #1f2833, #161c24, #161c24, #263950, #1f2833);
-  
-}
-
-.navbar {
-  background-color: #151b22;
-  border-bottom: 2px solid rgb(49, 117, 114);
-} 
-
 #scout-logo {
-  max-width: 300px;
+  max-width: 250px;
 }
 
 #googlemaps {
@@ -18,10 +7,9 @@ body {
     justify-content: center;
     height: 420px;
     width: 100%;
-    margin-left: 5%;
     border: solid #00303F 3px;
-    float: left;
-
+    /* float: left; */
+    
 }
 
 body {
@@ -30,11 +18,13 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    min-height: 800px;
 }
 
 .header {
     margin-top: 8px;
     height: 140px;
+    width: 100%;
 }
 
 .head1 {
@@ -43,27 +33,11 @@ body {
    max-width: 180px;
 }
 
-/* .head2 {
-    margin-left: 8px;
-    color: white;
-    font-family: 'Corben';
-    font-size: 1.5vw;
-} */
-
-#buttonRow {
-    display: flex;
-    /* justify-content: center; */
-    width: 90%;
-    /* margin-left: 18px;
-    margin-bottom: 36px; */
-    float: left;
-    
-}
-
 .btn1 {
-    margin-left: 95px; 
+    margin: auto; 
     margin-top: 12px;
     border-radius: 50px;
+    margin-bottom: 50px;
     font-size: 30px;   
     border: solid #00303F 3px;
     position: relative;
@@ -80,16 +54,6 @@ body {
     position: inherit;
     z-index: 0;
     border-radius: 24px;
-}
-
-/* **INSPECT** Changed the color scheme of the buttons
-Just thought it looked better feel free to veto
--Haydn */
-#uberBtn, #lyftBtn {
-  border-color: rgb(196, 152, 10); 
-  color: rgb(196, 152, 10); 
-  background-color:black;
-  cursor: pointer;
 }
 
 .lyft-ride-option {
@@ -150,12 +114,12 @@ Just thought it looked better feel free to veto
         font-family: Roboto;
         font-size: 25px;
         font-weight: 300;
-        margin-left: 18px;
         padding: 0 11px 0 13px;
         text-overflow: ellipsis;
-        width: 400px;
+        width: 320px;
         border: solid #00303F 3px;
         border-radius: 8px;
+        margin: 0 auto;
       }
 
       #pac-input:focus {
@@ -175,7 +139,11 @@ Just thought it looked better feel free to veto
 
 /* --------- card styling ----------- */
 #card-container {
-  margin-left: 50px;
+  text-align: -webkit-center;
+}
+
+.inputArea {
+  text-align: center;
 }
 
 #uber-card {

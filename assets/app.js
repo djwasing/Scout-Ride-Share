@@ -10,7 +10,7 @@ var config = {
   firebase.initializeApp(config);
   
   var database = firebase.database();
-  var map, infoWindow, pos, startLatitude, startLongitude, endLatitude, endLongitude, pickupEta, costEstimate, lyftCostDollar, uberPrice;
+  var map, infoWindow, pos, startLatitude, startLongitude, endLatitude, endLongitude, pickupEta, costEstimate, lyftCostDollar, uberPrice, lyftTkn, settings;
   
   // //-----------------------------------------
 
@@ -19,8 +19,30 @@ var config = {
 //call the function at line 257 so that the api will begin gathering info when we choose a destination
 // then click go to reveal the cards and run the check lower function
 //added the data attr to the span like dylan suggested
-
-
+function getLyftSettings() {
+  jQuery.ajaxPrefilter(function (options) {
+    if (options.crossDomain && jQuery.support.cors) {
+      options.url = 'https://cors-anywhere.herokuapp.com/' + options.url;
+    }
+  });
+  var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "https://api.lyft.com/oauth/token",
+    "method": "POST",
+    "headers": {       
+      "authorization": "Basic YzEzRFA2MVNUN2lnOlhGRDM5XzBWTkRBVmNoS3ZpX2hhUUhEZy1YNFBSLUF0",
+      "content-type": "application/json"
+    },
+    "processData": false,
+    "data": "{\"grant_type\": \"client_credentials\", \"scope\": \"public\"}"
+  }
+  $.ajax(settings).done(function (response) {
+    //console.log(response.access_token);
+    lyftTkn = response.access_token;
+  });
+} 
+getLyftSettings();
 
 function callAPI() {
   var queryURLETA = "https://api.uber.com/v1.2/estimates/time?start_latitude=" + startLatitude + "&start_longitude=" + startLongitude + "&end_latitude=" + endLatitude + "&end_longitude=" + endLongitude + "&server_token=CYeYg4Brhv5cRtRYESfcC9iRKG9TCDCfZhxASEaS";
@@ -36,8 +58,6 @@ function callAPI() {
   //Function for Uber AJAX Prices
 
   function uberTestPrice() {
-
-
     jQuery.ajax({
       type: "GET",
       url: queryURLPrice,
@@ -52,8 +72,6 @@ function callAPI() {
 
   //Function calling the Uber ETA for Times
   function uberTestETA() {
-
-
     jQuery.ajax({
       type: "GET",
       url: queryURLETA,
@@ -69,50 +87,46 @@ function callAPI() {
     });
   }
 
-  //Calling the function
+  //Calling the functions
   uberTestPrice();
   uberTestETA();
   costEstimate();
   rideETA();
 
-
-  // LYFT API and JS -------------------------------------------------------------------------------------
-
-  //THIS IS A CODE TO REQUEST A NEW TOKEN
-  // var settings = {
-  // "async": true,
-  // "crossDomain": true,
-  // "url": "https://api.lyft.com/oauth/token",
-  // "method": "POST",
-  // //missing --user "<client_id>:<client_secret>",
-  // "headers": {
-  // "authorization": "Basic YzEzRFA2MVNUN2lnOktDQVc4WE51X3VBUWJCcjVJczRaZzhLOGNXZGNhRVpV",
-  // "content-type": "application/json"
-  // },
-  // "processData": false,
-  // "data": "{\"grant_type\": \"refresh_token\", \"refresh_token\": <refresh_token>}"
-  // }
-
-
-  //------------------Lyft ajax method-------------------
-  var settings = {
-    "async": true,
-    "crossDomain": true,
-    "url": "https://api.lyft.com/oauth/token",
-    "method": "POST",
-    "headers": {
-      "authorization": "Basic YzEzRFA2MVNUN2lnOlhGRDM5XzBWTkRBVmNoS3ZpX2hhUUhEZy1YNFBSLUF0",
-      "content-type": "application/json"
-    },
-    "processData": false,
-    "data": "{\"grant_type\": \"client_credentials\", \"scope\": \"public\"}"
-  }
-  $.ajax(settings).done(function (response) {
-    // console.log(response);
-  });
+  
+//--------------Function to check for Lyft 401 Error---------------
+  $.ajax(settings).fail(function(xhr, textStatus, errorThrown){
+    //console.log(xhr.status);
+    var statusCode = parsInt = xhr.status;
+    if (statusCode === 401){
+      console.log("401 - Lyft Token EXPIRED");
+    //This is code to get a new lyft token: 
+      fetch("https://api.lyft.com/oauth/token", {
+        body: "{\"grant_type\": \"client_credentials\", \"scope\": \"public\"}",
+        headers: {
+        Authorization: "Basic YzEzRFA2MVNUN2lnOlhGRDM5XzBWTkRBVmNoS3ZpX2hhUUhEZy1YNFBSLUF0",
+          "Content-Type": "application/json"
+        },
+        method: "POST"
+      }).then(res=>res.json()).then(data=>console.log(data));
+  
+      $.ajax(settings).then(function (response) {
+        //console.log(response);
+        lyftTkn = response.access_token;
+      });
+    } 
+    else{
+      console.log("Lyft token currently valid");
+    }
+    }).then(function (response) {
+      //console.log(response.access_token)
+      lyftTkn = response.access_token;
+    });
+  
 
   // //ETA estimates for your ride
   function rideETA() {
+    //console.log(lyftTkn);
     var settings = {
       "async": true,
       "crossDomain": true,
@@ -120,7 +134,7 @@ function callAPI() {
       "url": "https://api.lyft.com/v1/eta?lat=" + startLatitude + "&lng=" + startLongitude,
       "method": "GET",
       "headers": {
-        "authorization": "Bearer Mz1nsB2cDxgr7oroeNGotsmeOmUYpIyXihuixpqbRSBpvncuH1GESQhqYAcrIiHgyQTpFTqiIxILL1EOk9TdEVazWW2sez02DxUqvAXkq4wxEAVM9ohW+3M="
+        "authorization": "Bearer " + lyftTkn
       }
     };
 
@@ -130,6 +144,7 @@ function callAPI() {
       lyftEta = parseInt(num1) / num2;
       $("#lyft-eta").attr("data-eta", lyftEta)
       $("#lyft-eta").text(lyftEta);
+      //console.log(lyftEta);
     });
   };
 
@@ -142,7 +157,7 @@ function callAPI() {
       "url": "https://api.lyft.com/v1/cost?start_lat=" + startLatitude + "&start_lng=" + startLongitude + "&end_lat=" + endLatitude + "&end_lng=" + endLongitude,
       "method": "GET",
       "headers": {
-        "authorization": "Bearer Mz1nsB2cDxgr7oroeNGotsmeOmUYpIyXihuixpqbRSBpvncuH1GESQhqYAcrIiHgyQTpFTqiIxILL1EOk9TdEVazWW2sez02DxUqvAXkq4wxEAVM9ohW+3M="
+        "authorization": "Bearer " + lyftTkn
       }
     }
 
@@ -152,7 +167,7 @@ function callAPI() {
       //code for cost estimate range
       var lyftCost = response.cost_estimates[0].estimated_cost_cents_min;
       var lyftCostDollar = parseInt(lyftCost) / 100;
-      console.log("LYFT cost " + lyftCostDollar);
+      //console.log("LYFT cost " + lyftCostDollar);
       $("#lyft-price").attr("data-price", lyftCostDollar);
       $("#lyft-price").text(lyftCostDollar);
     })
@@ -161,12 +176,9 @@ function callAPI() {
 
 //------------------------------------------
 
-// This example adds a search box to a map, using the Google Place Autocomplete
+// Adds a search box to the map, using the Google Place Autocomplete
 // feature. People can enter geographical searches. The search box will return a
 // pick list containing a mix of places and predicted search terms.
-
-// This example requires the Places library. Include the libraries=places
-// parameter when you first load the API. For example:
 
 function initAutocomplete() {
   var directionsDisplay = new google.maps.DirectionsRenderer;
@@ -313,9 +325,9 @@ $(document).ready(function () {
 
   function checkLower() {
     var priceLyft = $("#lyft-price").attr("data-price");
-    console.log(priceLyft);
+    //console.log(priceLyft);
     var priceUber = $("#uber-price").attr("data-price");
-    console.log(priceUber);
+    //console.log(priceUber);
     var uberNum = parseInt(priceUber);
     var lyftNum = parseInt(priceLyft);
     if (lyftNum < uberNum) {
