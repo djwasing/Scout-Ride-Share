@@ -179,7 +179,7 @@ body {
 }
 
 @media screen and (max-width: 800px) {
-    #goBtn {
-      background-color: rgb(78, 140, 255);
-    }
+  #goBtn {
+    background-color: rgb(78, 140, 255);
+  }
 }

@@ -19,30 +19,46 @@ var config = {
 //call the function at line 257 so that the api will begin gathering info when we choose a destination
 // then click go to reveal the cards and run the check lower function
 //added the data attr to the span like dylan suggested
-function getLyftSettings() {
-  jQuery.ajaxPrefilter(function (options) {
-    if (options.crossDomain && jQuery.support.cors) {
-      options.url = 'https://cors-anywhere.herokuapp.com/' + options.url;
-    }
-  });
-  var settings = {
-    "async": true,
-    "crossDomain": true,
-    "url": "https://api.lyft.com/oauth/token",
-    "method": "POST",
-    "headers": {       
-      "authorization": "Basic YzEzRFA2MVNUN2lnOlhGRDM5XzBWTkRBVmNoS3ZpX2hhUUhEZy1YNFBSLUF0",
-      "content-type": "application/json"
-    },
-    "processData": false,
-    "data": "{\"grant_type\": \"client_credentials\", \"scope\": \"public\"}"
-  }
-  $.ajax(settings).done(function (response) {
-    //console.log(response.access_token);
-    lyftTkn = response.access_token;
-  });
-} 
-getLyftSettings();
+// function getLyftSettings() {
+//   fetch("https://api.lyft.com/oauth/token", {
+//         body: "{\"grant_type\": \"client_credentials\", \"scope\": \"public\"}",
+//         headers: {
+//         Authorization: "Basic YzEzRFA2MVNUN2lnOlhGRDM5XzBWTkRBVmNoS3ZpX2hhUUhEZy1YNFBSLUF0",
+//           "Content-Type": "application/json"
+//         },
+//         method: "POST"
+//       }).then(res=>res.json()).then(data=>console.log(data.access_token));
+
+//         $.ajax(settings).done(function (response) {
+//           //console.log(response);
+//           lyftTkn = response.access_token;
+//           console.log(lyftTkn);
+//         })
+//       };
+      
+//   jQuery.ajaxPrefilter(function (options) {
+//     if (options.crossDomain && jQuery.support.cors) {
+//       options.url = 'https://cors-anywhere.herokuapp.com/' + options.url;
+//     }
+//   });
+//   var settings = {
+//     "async": true,
+//     "crossDomain": true,
+//     "url": "https://api.lyft.com/oauth/token",
+//     "method": "POST",
+//     "headers": {       
+//       "authorization": "Basic YzEzRFA2MVNUN2lnOlhGRDM5XzBWTkRBVmNoS3ZpX2hhUUhEZy1YNFBSLUF0",
+//       "content-type": "application/json"
+//     },
+//     "processData": false,
+//     "data": "{\"grant_type\": \"client_credentials\", \"scope\": \"public\"}"
+//   }
+//   $.ajax(settings).done(function (response) {
+//     console.log(response.access_token);
+//     lyftTkn = response.access_token;
+//   });
+
+// getLyftSettings();
 
 function callAPI() {
   var queryURLETA = "https://api.uber.com/v1.2/estimates/time?start_latitude=" + startLatitude + "&start_longitude=" + startLongitude + "&end_latitude=" + endLatitude + "&end_longitude=" + endLongitude + "&server_token=CYeYg4Brhv5cRtRYESfcC9iRKG9TCDCfZhxASEaS";
@@ -134,7 +150,7 @@ function callAPI() {
       "url": "https://api.lyft.com/v1/eta?lat=" + startLatitude + "&lng=" + startLongitude,
       "method": "GET",
       "headers": {
-        "authorization": "Bearer " + lyftTkn
+        "authorization": "Bearer DYstV2l1QzOoqqITgMQa+a+0yfwfElI2bOimCFEfwamJb4AYBuRacAN+6/1MrawlXL+ldk8sNMJH7UXZDtWkGvv8wWcMkxgf5NhIjlof90hIguGKbe8oE8k="
       }
     };
 
@@ -157,7 +173,7 @@ function callAPI() {
       "url": "https://api.lyft.com/v1/cost?start_lat=" + startLatitude + "&start_lng=" + startLongitude + "&end_lat=" + endLatitude + "&end_lng=" + endLongitude,
       "method": "GET",
       "headers": {
-        "authorization": "Bearer " + lyftTkn
+        "authorization": "Bearer DYstV2l1QzOoqqITgMQa+a+0yfwfElI2bOimCFEfwamJb4AYBuRacAN+6/1MrawlXL+ldk8sNMJH7UXZDtWkGvv8wWcMkxgf5NhIjlof90hIguGKbe8oE8k="
       }
     }
 
