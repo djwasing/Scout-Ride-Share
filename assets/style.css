@@ -177,3 +177,9 @@ body {
   color: #00303F;
   font-size: 22px;
 }
+
+@media screen and (max-width: 800px) {
+    #goBtn {
+      background-color: rgb(78, 140, 255);
+    }
+}
