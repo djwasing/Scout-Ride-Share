@@ -150,7 +150,7 @@ function callAPI() {
       "url": "https://api.lyft.com/v1/eta?lat=" + startLatitude + "&lng=" + startLongitude,
       "method": "GET",
       "headers": {
-        "authorization": "Bearer DYstV2l1QzOoqqITgMQa+a+0yfwfElI2bOimCFEfwamJb4AYBuRacAN+6/1MrawlXL+ldk8sNMJH7UXZDtWkGvv8wWcMkxgf5NhIjlof90hIguGKbe8oE8k="
+        "authorization": "Bearer BDrPd2q0TZWOS7ixHz6/+hr/W9SKr1Syy9tYk6T2hQkifj1KrdAFakwRZGIrtJHqALC6GP/1t54kXiwZql9IhA4Q5mkX0ZFODcGCz5gsF/+Moml+w9mZtkw="
       }
     };
 
@@ -173,7 +173,7 @@ function callAPI() {
       "url": "https://api.lyft.com/v1/cost?start_lat=" + startLatitude + "&start_lng=" + startLongitude + "&end_lat=" + endLatitude + "&end_lng=" + endLongitude,
       "method": "GET",
       "headers": {
-        "authorization": "Bearer DYstV2l1QzOoqqITgMQa+a+0yfwfElI2bOimCFEfwamJb4AYBuRacAN+6/1MrawlXL+ldk8sNMJH7UXZDtWkGvv8wWcMkxgf5NhIjlof90hIguGKbe8oE8k="
+        "authorization": "Bearer BDrPd2q0TZWOS7ixHz6/+hr/W9SKr1Syy9tYk6T2hQkifj1KrdAFakwRZGIrtJHqALC6GP/1t54kXiwZql9IhA4Q5mkX0ZFODcGCz5gsF/+Moml+w9mZtkw="
       }
     }
 
