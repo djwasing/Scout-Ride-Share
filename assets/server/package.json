@@ -1,0 +1,28 @@
+{
+  "name": "scout-package",
+  "version": "1.0.0",
+  "description": "Dependencies for the Scout app.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/djwasing/Scout-Project-App.git"
+  },
+  "keywords": [
+    "scout-package",
+    "package-json",
+    "package"
+  ],
+  "author": "\"Dylan Bonds <dylanwbonds@gmail.com> (https://mangodyl.github.io/portfolio/)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/djwasing/Scout-Project-App/issues"
+  },
+  "homepage": "https://github.com/djwasing/Scout-Project-App#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
