@@ -106,15 +106,26 @@ function callAPI() {
   //Calling the functions
   uberTestPrice();
   uberTestETA();
-  costEstimate();
-  rideETA();
 
+
+  var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": "https://api.lyft.com/oauth/token",
+        "method": "POST",
+        "headers": {       
+          "authorization": "Basic YzEzRFA2MVNUN2lnOlhGRDM5XzBWTkRBVmNoS3ZpX2hhUUhEZy1YNFBSLUF0",
+          "content-type": "application/json"
+        },
+        "processData": false,
+        "data": "{\"grant_type\": \"client_credentials\", \"scope\": \"public\"}"
+      };
   
 //--------------Function to check for Lyft 401 Error---------------
   $.ajax(settings).fail(function(xhr, textStatus, errorThrown){
-    //console.log(xhr.status);
+    // console.log(xhr.status);
     var statusCode = parsInt = xhr.status;
-    if (statusCode === 401){
+    if (statusCode == 401){
       console.log("401 - Lyft Token EXPIRED");
     //This is code to get a new lyft token: 
       fetch("https://api.lyft.com/oauth/token", {
@@ -137,11 +148,12 @@ function callAPI() {
     }).then(function (response) {
       //console.log(response.access_token)
       lyftTkn = response.access_token;
-    });
+    
   
 
   // //ETA estimates for your ride
   function rideETA() {
+    console.log("okay");
     //console.log(lyftTkn);
     var settings = {
       "async": true,
@@ -150,7 +162,7 @@ function callAPI() {
       "url": "https://api.lyft.com/v1/eta?lat=" + startLatitude + "&lng=" + startLongitude,
       "method": "GET",
       "headers": {
-        "authorization": "Bearer BDrPd2q0TZWOS7ixHz6/+hr/W9SKr1Syy9tYk6T2hQkifj1KrdAFakwRZGIrtJHqALC6GP/1t54kXiwZql9IhA4Q5mkX0ZFODcGCz5gsF/+Moml+w9mZtkw="
+        "authorization": 'Bearer ' + lyftTkn + ' '
       }
     };
 
@@ -173,7 +185,7 @@ function callAPI() {
       "url": "https://api.lyft.com/v1/cost?start_lat=" + startLatitude + "&start_lng=" + startLongitude + "&end_lat=" + endLatitude + "&end_lng=" + endLongitude,
       "method": "GET",
       "headers": {
-        "authorization": "Bearer BDrPd2q0TZWOS7ixHz6/+hr/W9SKr1Syy9tYk6T2hQkifj1KrdAFakwRZGIrtJHqALC6GP/1t54kXiwZql9IhA4Q5mkX0ZFODcGCz5gsF/+Moml+w9mZtkw="
+        "authorization": 'Bearer ' + lyftTkn + ''
       }
     }
 
@@ -188,6 +200,9 @@ function callAPI() {
       $("#lyft-price").text(lyftCostDollar);
     })
   };
+  costEstimate();
+  rideETA();
+});
 }
 
 //------------------------------------------
@@ -220,6 +235,33 @@ function initAutocomplete() {
   var markers = [];
   // Listen for the event fired when the user selects a prediction and retrieve
   // more details for that place.
+
+  // Try HTML5 geolocation. -----------------------
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function (position) {
+      pos = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+
+      infoWindow.setPosition(pos);
+      infoWindow.setContent("Your Location");
+      infoWindow.open(map);
+      map.setCenter(pos);
+      startLatitude = (pos.lat);
+      startLongitude = (pos.lng);
+    }, function () {
+      handleLocationError(true, infoWindow, map.getCenter());
+    });
+
+  }
+
+  else {
+    // Browser doesn’t support Geolocation
+    handleLocationError(false, infoWindow, map.getCenter());
+  }
+
+
   searchBox.addListener('places_changed', function () {
     var places = searchBox.getPlaces();
     if (places.length == 0) {
@@ -293,31 +335,6 @@ function initAutocomplete() {
       });
     };
   });
-
-  // Try HTML5 geolocation. -----------------------
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function (position) {
-      pos = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude
-      };
-
-      infoWindow.setPosition(pos);
-      infoWindow.setContent("Your Location");
-      infoWindow.open(map);
-      map.setCenter(pos);
-      startLatitude = (pos.lat);
-      startLongitude = (pos.lng);
-    }, function () {
-      handleLocationError(true, infoWindow, map.getCenter());
-    });
-
-  }
-
-  else {
-    // Browser doesn’t support Geolocation
-    handleLocationError(false, infoWindow, map.getCenter());
-  }
 }
 
 //Calling the function when uber button is clicked
