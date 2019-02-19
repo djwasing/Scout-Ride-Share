@@ -14,51 +14,7 @@ var config = {
   
   // //-----------------------------------------
 
-//Haydn's edit:
-//moved the api methods to the top and inside a callAPI function
-//call the function at line 257 so that the api will begin gathering info when we choose a destination
-// then click go to reveal the cards and run the check lower function
-//added the data attr to the span like dylan suggested
-// function getLyftSettings() {
-//   fetch("https://api.lyft.com/oauth/token", {
-//         body: "{\"grant_type\": \"client_credentials\", \"scope\": \"public\"}",
-//         headers: {
-//         Authorization: "Basic YzEzRFA2MVNUN2lnOlhGRDM5XzBWTkRBVmNoS3ZpX2hhUUhEZy1YNFBSLUF0",
-//           "Content-Type": "application/json"
-//         },
-//         method: "POST"
-//       }).then(res=>res.json()).then(data=>console.log(data.access_token));
-
-//         $.ajax(settings).done(function (response) {
-//           //console.log(response);
-//           lyftTkn = response.access_token;
-//           console.log(lyftTkn);
-//         })
-//       };
-      
-//   jQuery.ajaxPrefilter(function (options) {
-//     if (options.crossDomain && jQuery.support.cors) {
-//       options.url = 'https://cors-anywhere.herokuapp.com/' + options.url;
-//     }
-//   });
-//   var settings = {
-//     "async": true,
-//     "crossDomain": true,
-//     "url": "https://api.lyft.com/oauth/token",
-//     "method": "POST",
-//     "headers": {       
-//       "authorization": "Basic YzEzRFA2MVNUN2lnOlhGRDM5XzBWTkRBVmNoS3ZpX2hhUUhEZy1YNFBSLUF0",
-//       "content-type": "application/json"
-//     },
-//     "processData": false,
-//     "data": "{\"grant_type\": \"client_credentials\", \"scope\": \"public\"}"
-//   }
-//   $.ajax(settings).done(function (response) {
-//     console.log(response.access_token);
-//     lyftTkn = response.access_token;
-//   });
-
-// getLyftSettings();
+  // Uber API call
 
 function callAPI() {
   var queryURLETA = "https://api.uber.com/v1.2/estimates/time?start_latitude=" + startLatitude + "&start_longitude=" + startLongitude + "&end_latitude=" + endLatitude + "&end_longitude=" + endLongitude + "&server_token=CYeYg4Brhv5cRtRYESfcC9iRKG9TCDCfZhxASEaS";
