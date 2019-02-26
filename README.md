@@ -1,14 +1,16 @@
 # Scout 
-*Find a cheaper ride.* ![Scout logo](public/assets/images/arrowheadLogo.jpg)
+*Find a cheaper ride.* 
+
+![Scout logo](public/assets/images/arrowheadLogo.jpg)
 
 ***
 
-## What Is Scout? :bulb:
+## What Is Scout? :round_pushpin:
 A clean, quick ride-share comparison service which helps you save time and money. We compare Uber and Lyft prices along with estimated time of pick-up on a ride-by-ride basis to make sure you're always choosing the best ride for you.
 
 ***
 
-## How Do You Use It? :
+## How Do You Use It? :bulb:
 The Scout team developed the app with users in mind, so we've made the experience as simple as possible:
 
 1. Allow Scout to access your current location by agreeing to the alert that pops up.
