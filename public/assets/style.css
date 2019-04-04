@@ -1,5 +1,6 @@
 #scout-logo {
   max-width: 250px;
+  max-height: 130px;
 }
 
 #googlemaps {
@@ -181,5 +182,9 @@ body {
 @media screen and (max-width: 800px) {
   #goBtn {
     background-color: rgb(78, 140, 255);
+  }
+
+  body {
+    width: 100%
   }
 }
